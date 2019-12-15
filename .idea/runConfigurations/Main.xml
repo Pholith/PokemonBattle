@@ -2,7 +2,7 @@
   <configuration default="false" name="Main" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="hellofx.Main" />
     <module name="hellofx" />
-    <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Vincent Buisset\Documents\Projet\PokemonBattle\javafx-sdk-13.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+    <option name="VM_PARAMETERS" value="--module-path $ModuleFileDir$/&quot;javafx-sdk-13.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="hellofx.*" />
