@@ -1,5 +1,6 @@
-package pages.page2;
+package graphics.pages.page2;
 
+import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,7 +24,7 @@ public class Page2Controller {
 
     @FXML
     void but_inventory_action(ActionEvent event) {
-
+        new TextPopupArea("ahahah", "un super texte !");
     }
 
     @FXML

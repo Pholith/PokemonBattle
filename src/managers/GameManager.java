@@ -1,6 +1,8 @@
 package managers;
 
 
+import javafx.scene.layout.Pane;
+
 public class GameManager  {
 
 
@@ -13,10 +15,10 @@ public class GameManager  {
 
 
 
-
     private PageManager pageManager;
     private final BattleManager battleManager = new BattleManager();
 
+    //public static PageManager GetPageManager(){return pageManager;}
 
 
 
@@ -36,6 +38,9 @@ public class GameManager  {
     }
 
 
+    public void AddSreenPane(Pane pane){
+        pageManager.AddPopupPanel(pane);
+    }
 
     public void StartGame(){
         System.out.println(pageManager == null);

@@ -1,5 +1,7 @@
 package managers;
 
+import javafx.animation.ScaleTransition;
+import javafx.util.Duration;
 import utils.Constants;
 import utils.PageNotFoundException;
 import javafx.application.Application;
@@ -9,6 +11,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,7 +27,8 @@ public class PageManager extends Application {
         private static PageManager instance;
         private HashMap<String, Pane> screenMap = new HashMap<>();
         private Scene main;
-
+        private Pane currentPanel;
+        private URL dialogBoxUrl;
 
 
     public PageManager() {
@@ -74,9 +79,9 @@ public class PageManager extends Application {
 
         @Override
         public void start(Stage primaryStage) throws Exception {
-            Pane root = FXMLLoader.load( Paths.get(Constants.pagesDir + "/mainPage/Page.fxml").toUri().toURL() );
+            currentPanel = FXMLLoader.load( Paths.get(Constants.pagesDir + "/mainPage/Page.fxml").toUri().toURL() );
             primaryStage.setTitle("Pokemon");
-            main = new Scene(root);
+            main = new Scene(currentPanel);
             primaryStage.setScene(main);
             primaryStage.show();
         }
@@ -100,11 +105,20 @@ public class PageManager extends Application {
 
 
         void switchPage(String name) {
-            main.setRoot(screenMap.get(name));
+            currentPanel = screenMap.get(name);
+            main.setRoot(currentPanel);
         }
 
 
+        public void printDialogZone(String text){
+
+        }
+
+
+    public void AddPopupPanel(Pane pane) {
+        currentPanel.getChildren().add(pane);
     }
+}
 
 
 

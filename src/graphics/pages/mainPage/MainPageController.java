@@ -1,4 +1,4 @@
-package pages.mainPage;
+package graphics.pages.mainPage;
 
 import managers.GameManager;
 import javafx.event.ActionEvent;
