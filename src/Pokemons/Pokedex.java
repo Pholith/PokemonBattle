@@ -1,7 +1,6 @@
 package Pokemons;
 
-import Pokemons.Utils.InvalidFormatException;
-import Pokemons.Utils.Strings;
+import utils.InvalidFormatException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

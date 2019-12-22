@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Tests" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="Pokemons.Test.Main" />
+    <option name="MAIN_CLASS_NAME" value="test.Main" />
     <module name="hellofx" />
     <method v="2">
       <option name="Make" enabled="true" />

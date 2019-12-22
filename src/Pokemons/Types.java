@@ -1,6 +1,6 @@
 package Pokemons;
 
-import Pokemons.Utils.Strings;
+import utils.Strings;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
