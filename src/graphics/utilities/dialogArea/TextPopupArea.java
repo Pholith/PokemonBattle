@@ -1,6 +1,8 @@
 package graphics.utilities.dialogArea;
 
 import javafx.animation.ScaleTransition;
+import javafx.animation.Transition;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,9 +24,9 @@ public class TextPopupArea {
     private final String[] toPrint;
     private Pane thisPanel;
     private int textId = 0;
-    private Function actionOnFinish;
+    private Runnable actionOnFinish;
 
-    public TextPopupArea(Function onFinishAction, String... txt) {
+    public TextPopupArea(Runnable onFinishAction, String... txt) {
         this(txt);
         actionOnFinish = onFinishAction;
     }
@@ -40,6 +42,11 @@ public class TextPopupArea {
             GameManager.GetInstance().AddSreenPane(thisPanel);
             thisPanel.setLayoutX(150.0);
             thisPanel.setLayoutY(300.0);
+
+            FadeTransition fade = new FadeTransition(Duration.millis(300), thisPanel);
+            fade.setFromValue(0d);
+            fade.setToValue(1d);
+            fade.play();
 
             ScaleTransition st = new ScaleTransition(Duration.millis(300), thisPanel);
             st.setFromX(0f);
@@ -69,12 +76,16 @@ public class TextPopupArea {
         ScaleTransition st = new ScaleTransition(Duration.millis(300), thisPanel);
         st.setFromX(1f);
         st.setToX(0f);
+
+
+
         st.setCycleCount(1);
         st.play();
         st.setOnFinished(actionEvent -> {
+            thisPanel.setVisible(false);
             ((Pane)thisPanel.getParent()).getChildren().remove(thisPanel);
             if(actionOnFinish != null)
-            actionOnFinish.apply(null);
+            actionOnFinish.run();
         });
     }
 

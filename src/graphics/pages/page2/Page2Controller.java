@@ -1,12 +1,13 @@
 package graphics.pages.page2;
 
+import base.IController;
 import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import managers.GameManager;
 
-public class Page2Controller {
+public class Page2Controller implements IController {
 
     @FXML
     private Button but_inventory;
@@ -19,7 +20,7 @@ public class Page2Controller {
 
     @FXML
     void but_fight_action(ActionEvent event) {
-        GameManager.GetInstance().StartFight();
+        GameManager.GetInstance().startFight();
     }
 
     @FXML
@@ -29,7 +30,7 @@ public class Page2Controller {
 
     @FXML
     void but_pokedex_action(ActionEvent event) {
-        GameManager.GetInstance().SwitchPage("TeamBuilder");
+        GameManager.GetInstance().switchPage("TeamBuilder");
     }
 
 }

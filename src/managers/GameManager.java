@@ -7,6 +7,7 @@ public class GameManager  {
 
 
     private static final GameManager Instance = new GameManager();
+
     public static GameManager GetInstance(){return Instance;}
     private GameManager(){
         super();
@@ -16,7 +17,8 @@ public class GameManager  {
 
 
     private PageManager pageManager;
-    private final BattleManager battleManager = new BattleManager();
+    private BattleEvent battleEvent = new BattleEvent();
+    public static BattleEvent getBattleEvent(){return Instance.battleEvent;}
 
     //public static PageManager GetPageManager(){return pageManager;}
 
@@ -46,11 +48,15 @@ public class GameManager  {
     }
 
 
-    public void StartFight() {
-        SwitchPage("fight");
+    public void startFight(){
+        switchPage("fightPage");
     }
 
-    public void SwitchPage(String pageName){
+
+
+
+
+    public void switchPage(String pageName){
         assert(pageManager != null);
         pageManager.switchPage(pageName);
     }

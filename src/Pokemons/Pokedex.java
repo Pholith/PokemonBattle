@@ -45,7 +45,7 @@ public class Pokedex {
                 PokemonDescriptor descriptor = new PokemonDescriptor(
                         Integer.parseInt(splitedLine[0]),
                         splitedLine[1],
-                        splitedLine[2],
+                        "pokemons_img/"+splitedLine[2],
                         Float.parseFloat(splitedLine[3]),
                         Float.parseFloat(splitedLine[4]),
                         Types.getType(splitedLine[5]),

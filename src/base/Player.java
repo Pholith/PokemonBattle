@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Player {
 
-    private final String name = "aplayer";
 
+    private final String name = "aplayer";
 private ArrayList<PokemonDescriptor> pokemons = new ArrayList<PokemonDescriptor>();
 
 

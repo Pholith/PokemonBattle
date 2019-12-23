@@ -1,6 +1,9 @@
 package managers;
 
+import base.IController;
+import com.sun.webkit.network.URLs;
 import javafx.animation.ScaleTransition;
+import javafx.scene.Parent;
 import javafx.util.Duration;
 import utils.Constants;
 import utils.PageNotFoundException;
@@ -9,13 +12,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import utils.UnkownPageException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.rmi.server.ExportException;
 import java.util.HashMap;
 
 
@@ -25,7 +31,7 @@ public class PageManager extends Application {
 
 
         private static PageManager instance;
-        private HashMap<String, Pane> screenMap = new HashMap<>();
+        private HashMap<String, URI> screenMap = new HashMap<>();
         private Scene main;
         private Pane currentPanel;
         private URL dialogBoxUrl;
@@ -45,7 +51,7 @@ public class PageManager extends Application {
 
 
 
-    private void InitPageList(){
+    private void InitPageList() {
 
 
         File[] directories = new File(Constants.pagesDir).listFiles(File::isDirectory);
@@ -56,18 +62,18 @@ public class PageManager extends Application {
 
             path = Paths.get(Constants.pagesDir + "/" + d.getName() + "/Page.fxml");
 
-            try {
-            if(!Files.exists(path)){
+
+            if (!Files.exists(path))
                 throw new PageNotFoundException("Page " + path + " not found !");
-            }
-            screenMap.put(d.getName(), FXMLLoader.load(path.toUri().toURL()));
-            } catch (Exception e) {
-                System.out.println(d.getName());
-                e.printStackTrace();
-                continue;
-            }
+
+
+            screenMap.put(d.getName(), path.toUri());
+
+
+            continue;
         }
     }
+
 
 
     @Override
@@ -105,14 +111,27 @@ public class PageManager extends Application {
 
 
         void switchPage(String name) {
-            currentPanel = screenMap.get(name);
+
+        if(!screenMap.containsKey(name))
+            throw new UnkownPageException(name);
+
+        System.out.println("Load page "+name);
+
+            try {
+                FXMLLoader loader = new FXMLLoader(screenMap.get(name).toURL());
+                                 currentPanel = loader.load();
+                var controller =loader.getController();
+
+                if(controller instanceof IController)
+                ((IController)controller).onInitialized();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             main.setRoot(currentPanel);
         }
 
 
-        public void printDialogZone(String text){
-
-        }
 
 
     public void AddPopupPanel(Pane pane) {
