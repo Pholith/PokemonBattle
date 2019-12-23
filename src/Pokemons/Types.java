@@ -5,6 +5,7 @@ import utils.Strings;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +41,7 @@ public class Types {
         typesList = new ArrayList<>();
         typesMap = new HashMap<>();
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("resources/grid_types.csv")))
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Types.class.getResourceAsStream("/resources/grid_types.csv"))))
         {
             String currLine;
             String typeName = "";

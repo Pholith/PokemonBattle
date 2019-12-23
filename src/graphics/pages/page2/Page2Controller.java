@@ -29,7 +29,7 @@ public class Page2Controller {
 
     @FXML
     void but_pokedex_action(ActionEvent event) {
-
+        GameManager.GetInstance().SwitchPage("TeamBuilder");
     }
 
 }

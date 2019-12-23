@@ -5,6 +5,7 @@ import utils.InvalidFormatException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 /**
@@ -22,11 +23,16 @@ public class Pokedex {
     public ArrayList<PokemonDescriptor> getPokemons() {
         return pokemons;
     }
+    public PokemonDescriptor getFromName(String name) {
+        return pokemonMapName.get(name);
+    }
     private ArrayList<PokemonDescriptor> pokemons;
+    private static HashMap<String, PokemonDescriptor> pokemonMapName;
 
     private void buildPokemons() {
         pokemons = new ArrayList<>();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("resources/pokedex.csv")))
+        pokemonMapName = new HashMap<>();
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/resources/pokedex.csv"))))
         {
             String currLine;
             bufferedReader.readLine(); // zap first line : id,identifier,picture,height,weight,type1,type2
@@ -36,7 +42,7 @@ public class Pokedex {
 
                 if (splitedLine.length < 5) throw new InvalidFormatException();
 
-                pokemons.add(new PokemonDescriptor(
+                PokemonDescriptor descriptor = new PokemonDescriptor(
                         Integer.parseInt(splitedLine[0]),
                         splitedLine[1],
                         splitedLine[2],
@@ -44,7 +50,9 @@ public class Pokedex {
                         Float.parseFloat(splitedLine[4]),
                         Types.getType(splitedLine[5]),
                         (splitedLine.length > 6) ? Types.getType(splitedLine[6]) : null
-                ));
+                );
+                pokemons.add(descriptor);
+                pokemonMapName.put(splitedLine[1], descriptor);
             }
 
         }

@@ -51,16 +51,23 @@ public class PokemonDescriptor {
         return types;
     }
 
+    public String typesToString() {
+        final StringBuilder sb = new StringBuilder();
+        types.sort(null);
+        for (PokemonType type : types) {
+            sb.append(type.toString()).append(" ");
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("PokemonDescriptor{");
-        sb.append("ID=").append(ID);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", image='").append(image).append('\'');
-        sb.append(", height=").append(height);
-        sb.append(", weight=").append(weight);
-        sb.append(", types=").append(types);
-        sb.append('}');
+        final StringBuilder sb = new StringBuilder();
+        sb.append(name);
         return sb.toString();
+    }
+
+    public PokemonDescriptorBean createBean() {
+        return new PokemonDescriptorBean(name, typesToString());
     }
 }

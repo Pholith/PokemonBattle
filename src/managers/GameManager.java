@@ -34,9 +34,7 @@ public class GameManager  {
 
         }
 
-
     }
-
 
     public void AddSreenPane(Pane pane){
         pageManager.AddPopupPanel(pane);
@@ -48,18 +46,14 @@ public class GameManager  {
     }
 
 
-
-    public void StartFight(){
-        System.out.println(pageManager == null);
-        pageManager.switchPage("fight");
+    public void StartFight() {
+        SwitchPage("fight");
     }
 
-
-
-
-
-
-
+    public void SwitchPage(String pageName){
+        assert(pageManager != null);
+        pageManager.switchPage(pageName);
+    }
 
 }
 
