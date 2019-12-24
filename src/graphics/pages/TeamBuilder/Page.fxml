@@ -1,45 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="576.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.pages.TeamBuilder.TeamBuilderController">
+<AnchorPane prefHeight="576.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.pages.TeamBuilder.TeamBuilderController">
    <children>
       <SplitPane dividerPositions="0.5606653620352251" prefWidth="887.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="456.0" prefWidth="0.0">
-               <children>
-                  <Label contentDisplay="CENTER" text="Pokédex" textAlignment="CENTER" VBox.vgrow="NEVER">
-                     <font>
-                        <Font size="33.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="50.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField fx:id="pokemonSearch" onAction="#filterPokedex" prefHeight="25.0" prefWidth="266.0" promptText="Search Pokemon">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                     <VBox.margin>
-                        <Insets left="50.0" right="50.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TableView fx:id="pokedexList" onMouseClicked="#selectPokemon" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="columnName" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="176.0" resizable="false" sortable="false" />
-                      <TableColumn fx:id="columnTypes" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="181.0" resizable="false" sortable="false" />
-                    </columns>
-                     <VBox.margin>
-                        <Insets bottom="50.0" left="50.0" right="50.0" top="10.0" />
-                     </VBox.margin>
-                  </TableView>
-               </children>
-            </VBox>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="456.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label contentDisplay="CENTER" text="Pokédex" textAlignment="CENTER" VBox.vgrow="NEVER">
+                           <font>
+                              <Font size="33.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="pokemonSearch" onAction="#filterPokedex" prefHeight="25.0" prefWidth="266.0" promptText="Search Pokemon">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets left="50.0" right="50.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TableView fx:id="pokedexList" onMouseClicked="#selectPokemon" prefWidth="200.0">
+                          <columns>
+                            <TableColumn fx:id="columnName" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="176.0" resizable="false" sortable="false" />
+                            <TableColumn fx:id="columnTypes" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="181.0" resizable="false" sortable="false" />
+                          </columns>
+                           <VBox.margin>
+                              <Insets bottom="50.0" left="50.0" right="50.0" top="10.0" />
+                           </VBox.margin>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </center>
+               <top>
+                  <Button mnemonicParsing="false" onAction="#onClickMenu" text="Menu" BorderPane.alignment="TOP_LEFT">
+                     <BorderPane.margin>
+                        <Insets left="20.0" top="20.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </top>
+            </BorderPane>
             <SplitPane dividerPositions="0.5818815331010453" orientation="VERTICAL">
               <items>
                   <VBox prefHeight="200.0" prefWidth="100.0">
@@ -52,7 +76,7 @@
                               <Insets />
                            </opaqueInsets>
                            <VBox.margin>
-                              <Insets left="30.0" />
+                              <Insets left="30.0" top="10.0" />
                            </VBox.margin>
                         </Label>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -62,10 +86,18 @@
                                     <Rectangle2D />
                                  </viewport>
                               </ImageView>
+                              <Button mnemonicParsing="false" onAction="#onSelectCapacities" text="Select Capacities">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
                               <Button fx:id="addTeamButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#addPokemon" text="Add">
                                  <HBox.margin>
-                                    <Insets left="50.0" />
+                                    <Insets left="10.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
                               </Button>
                            </children>
                         </HBox>
@@ -175,7 +207,7 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Label>
-                        <ListView fx:id="teamList" prefHeight="200.0" prefWidth="200.0">
+                        <ListView fx:id="teamList" onMouseClicked="#removePokemon" prefHeight="200.0" prefWidth="200.0">
                            <VBox.margin>
                               <Insets bottom="5.0" left="20.0" right="20.0" />
                            </VBox.margin>
