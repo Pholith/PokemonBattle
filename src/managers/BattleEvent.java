@@ -29,6 +29,7 @@ public void startFight(PageFightController currentController) {
 }
 
 
+
     private void nextTurn() {
         currentPlayerTurn = (currentPlayerTurn+1)%2;
         new TextPopupArea( () -> timeToPlay(), "Au tour du joueur " +  (currentPlayerTurn+1));
@@ -37,6 +38,7 @@ public void startFight(PageFightController currentController) {
 private void timeToPlay(){
     currentController.setGameButtonsVisibility(true);
 }
+
 
 
 public void attack(Attack atk) {

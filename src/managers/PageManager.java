@@ -4,6 +4,7 @@ import base.IController;
 import com.sun.webkit.network.URLs;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Parent;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import utils.Constants;
 import utils.PageNotFoundException;
@@ -88,6 +89,7 @@ public class PageManager extends Application {
             currentPanel = FXMLLoader.load( Paths.get(Constants.pagesDir + "/mainPage/Page.fxml").toUri().toURL() );
             primaryStage.setTitle("Pokemon");
             main = new Scene(currentPanel);
+            main.getStylesheets().add("/resources/fonts/pokemon.css");
             primaryStage.setScene(main);
             primaryStage.show();
         }

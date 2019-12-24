@@ -2,6 +2,7 @@ package graphics.pages.fightPage;
 
 import Pokemons.Attack;
 import base.IController;
+import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -51,9 +52,27 @@ public class PageFightController implements IController {
 
 
     public void setGameButtonsVisibility(boolean val){
-        hbox_action.setVisible(val);
+
+        TranslateTransition tr = new TranslateTransition(Duration.millis(300),hbox_action);
+        tr.setInterpolator(Interpolator.LINEAR);
+
+        if(val){
+            tr.setFromY(100);
+            tr.setToY(0);
+            hbox_action.setVisible(val);
+        }else{
+            tr.setFromY(0);
+            tr.setToY(100);
+            tr.setOnFinished( (o) -> hbox_action.setVisible(val)  );
+        }
+
+        tr.play();
+
+
         list_atk.setVisible(false);
         list_atk.getSelectionModel().setSelectionMode(null);
+
+
     }
 
 
@@ -107,7 +126,7 @@ public class PageFightController implements IController {
     void onClickAttack(MouseEvent event) {
         var actVisible = !list_atk.isVisible();
 
-        TranslateTransition tr = new TranslateTransition(Duration.millis(400),list_atk);
+        TranslateTransition tr = new TranslateTransition(Duration.millis(200),list_atk);
 
         tr.setCycleCount(1);
 

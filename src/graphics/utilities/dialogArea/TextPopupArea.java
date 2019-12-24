@@ -1,22 +1,20 @@
 package graphics.utilities.dialogArea;
 
-import javafx.animation.ScaleTransition;
-import javafx.animation.Transition;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import managers.GameManager;
+import org.w3c.dom.Text;
 import utils.Constants;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.function.Function;
+
 
 public class TextPopupArea {
 
@@ -25,6 +23,7 @@ public class TextPopupArea {
     private Pane thisPanel;
     private int textId = 0;
     private Runnable actionOnFinish;
+    private boolean isClosing;
 
     public TextPopupArea(Runnable onFinishAction, String... txt) {
         this(txt);
@@ -41,7 +40,7 @@ public class TextPopupArea {
             thisPanel = loader.load();
             GameManager.GetInstance().AddSreenPane(thisPanel);
             thisPanel.setLayoutX(150.0);
-            thisPanel.setLayoutY(300.0);
+            thisPanel.setLayoutY(375.0);
 
             FadeTransition fade = new FadeTransition(Duration.millis(300), thisPanel);
             fade.setFromValue(0d);
@@ -54,6 +53,18 @@ public class TextPopupArea {
             st.setCycleCount(1);
             st.play();
             nextText();
+
+            TranslateTransition tr = new TranslateTransition(Duration.millis(300), circle_nextText);
+
+            tr.setFromY(0);
+            tr.setToY(10);
+            tr.setCycleCount (Timeline.INDEFINITE);
+            tr.setAutoReverse(true);
+            tr.play();
+
+
+
+
 
         } catch (
                 IOException e) {
@@ -73,9 +84,15 @@ public class TextPopupArea {
 
 
     private void closePanel(){
-        ScaleTransition st = new ScaleTransition(Duration.millis(300), thisPanel);
+
+        if(!isClosing)
+            isClosing = true;
+        else return;
+
+        ScaleTransition st = new ScaleTransition(Duration.millis(200), thisPanel);
         st.setFromX(1f);
         st.setToX(0f);
+        st.setInterpolator(Interpolator.LINEAR);
 
 
 
@@ -92,15 +109,18 @@ public class TextPopupArea {
 
 
 
+
     @FXML
     private Label text_zone;
 
-    @FXML
-    private Button but_ok;
 
     @FXML
-    void but_ok_action(ActionEvent event) {
-        nextText();
+    private Circle circle_nextText;
+
+
+    @FXML
+    void onPopupClick(MouseEvent event) {
+nextText();
     }
 
 
