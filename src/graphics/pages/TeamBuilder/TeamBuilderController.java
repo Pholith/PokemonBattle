@@ -1,11 +1,13 @@
 package graphics.pages.TeamBuilder;
 
 import Pokemons.Pokedex;
+import Pokemons.PokemonCreature;
 import Pokemons.PokemonDescriptor;
 import Pokemons.PokemonDescriptorBean;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,12 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import managers.GameManager;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class TeamBuilderController implements Initializable {
@@ -54,16 +51,38 @@ public class TeamBuilderController implements Initializable {
     @FXML
     private Label speedLabel;
     @FXML
-    private ListView<?> teamList;
+    private ListView<PokemonCreature> teamList;
+
+    @FXML
+    void onSelectCapacities(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickMenu(ActionEvent event) {
+        GameManager.GetInstance().switchPage("page2");
+    }
 
     @FXML
     void addPokemon(ActionEvent event) {
-
+        PokemonDescriptorBean selectedBean = pokedexList.getSelectionModel().getSelectedItem();
+        PokemonDescriptor descriptor = pokedex.getFromName(selectedBean.getName());
+        PokemonCreature pokemon = new PokemonCreature(descriptor, null);
+        if (team.size() < 6) team.add(pokemon);
+        updateManagerTeam();
     }
     @FXML
-    void filterPokedex(ActionEvent event) {
-
+    void removePokemon(MouseEvent event) {
+        PokemonCreature pokemon = teamList.getSelectionModel().getSelectedItem();
+        team.remove(pokemon);
+        updateManagerTeam();
     }
+
+    @FXML
+    void filterPokedex(ActionEvent event) {
+        filteredList.setPredicate(pokemonDescriptorBean -> pokemonDescriptorBean.getName().startsWith(pokemonSearch.getText()));
+    }
+
     @FXML
     void selectPokemon(MouseEvent event) {
         PokemonDescriptorBean selectedBean = pokedexList.getSelectionModel().getSelectedItem();
@@ -77,16 +96,18 @@ public class TeamBuilderController implements Initializable {
             System.err.println(e.getMessage());
         }
         types.setText(descriptor.typesToString());
-        /*hpLabel;
-        attackLabel;
-        defenseLabel;
-        speAttackLabel;
-        speDefenseLabel;
-        speedLabel;*/
+        PokemonCreature pokemon = new PokemonCreature(descriptor, null);
+        hpLabel.setText(        String.valueOf(pokemon.getHp()));
+        attackLabel.setText(    String.valueOf(pokemon.getAttack()));
+        defenseLabel.setText(   String.valueOf(pokemon.getDefense()));
+        speAttackLabel.setText( String.valueOf(pokemon.getSpecialAttack()));
+        speDefenseLabel.setText(String.valueOf(pokemon.getSpecialDefense()));
+        speedLabel.setText(     String.valueOf(pokemon.getSpeed()));
     }
     private Pokedex pokedex;
 
-
+    private ObservableList<PokemonCreature> team;
+    private FilteredList<PokemonDescriptorBean> filteredList; // list of pokemons in the pokedex
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -96,9 +117,17 @@ public class TeamBuilderController implements Initializable {
         for (PokemonDescriptor poke: pokedex.getPokemons()) {
             observableList.add(poke.createBean());
         }
-        pokedexList.setItems(observableList);
+        filteredList = new FilteredList<>(observableList);
+        pokedexList.setItems(filteredList);
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnTypes.setCellValueFactory(new PropertyValueFactory<>("types"));
+
+        team = FXCollections.observableArrayList();
+        teamList.setItems(team);
+    }
+
+    private void updateManagerTeam() {
+        GameManager.GetInstance().setTeam(team);
     }
 }
