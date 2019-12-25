@@ -45,16 +45,22 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <HBox fx:id="hbox_action" alignment="CENTER_LEFT" layoutX="307.0" layoutY="412.0" prefHeight="88.0" prefWidth="861.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <HBox fx:id="hbox_action" alignment="CENTER_LEFT" layoutX="307.0" layoutY="412.0" prefHeight="88.0" prefWidth="861.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
-                  <ImageView fx:id="but_attack" onMouseClicked="#onClickAttack" onMousePressed="#onAttackDrag" onMouseReleased="#onAttackEnd">
+                  <ImageView fx:id="but_capacity" onMouseClicked="#onClickAttack" onMousePressed="#onAttackDrag" onMouseReleased="#onAttackRelease">
                      <image>
-                        <Image url="@../../../resources/ui_img/button_attack.png" />
+                        <Image url="@../../../resources/ui_img/but_attack.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="but_switchPokemon" onMouseClicked="#onClickChangePokemon" onMousePressed="#onChangePokemonDrag" onMouseReleased="#onChangePokemonRelease">
+                     <image>
+                        <Image url="@../../../resources/ui_img/but_changePokemon.png" />
                      </image>
                   </ImageView>
                </children>
             </HBox>
-            <ListView fx:id="list_atk" layoutX="10.0" layoutY="100.0" prefHeight="338.0" prefWidth="229.0" style="-fx-background-color: black; -fx-border-width: 4px; -fx-border-color: orange;" />
+            <ListView fx:id="list_capacity" layoutX="10.0" layoutY="100.0" prefHeight="338.0" prefWidth="229.0" style="-fx-background-color: black; -fx-border-width: 4px; -fx-border-color: orange;" />
+            <ListView fx:id="list_swichPokemon" layoutX="157.0" layoutY="100.0" prefHeight="338.0" prefWidth="229.0" style="-fx-background-color: black; -fx-border-width: 4px; -fx-border-color: #008454;" />
          </children>
       </AnchorPane>
    </children>

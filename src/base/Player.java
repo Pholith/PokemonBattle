@@ -10,10 +10,21 @@ public class Player {
 
 
     private final String name = "aplayer";
-public ArrayList<PokemonCreature> pokemons = new ArrayList<PokemonCreature>();
+    private final ArrayList<PokemonCreature> pokemons;
+    private int selectedPokemon = 0;
 
+    public Player(ArrayList<PokemonCreature> pokemons) {
+        this.pokemons = pokemons;
+    }
 
+public void setSelectedPokemonId(PokemonCreature pok){
+    selectedPokemon = pokemons.indexOf(pok);
+    }
     public PokemonCreature getCurrentPokemon() {
-    return pokemons.get(0);
+    return pokemons.get(selectedPokemon);
+    }
+
+    public ArrayList<PokemonCreature> getPokemons() {
+        return pokemons;
     }
 }

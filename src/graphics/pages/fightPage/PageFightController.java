@@ -1,18 +1,13 @@
 package graphics.pages.fightPage;
 
-import Pokemons.Attack;
-import Pokemons.Capacity;
-import Pokemons.DamageClass;
-import Pokemons.PokemonType;
+import Pokemons.*;
 import base.IController;
+import base.Player;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
@@ -30,26 +25,31 @@ public class PageFightController implements IController {
 
 
 
-    public void updateCapacityList(ArrayList<Capacity> atckList) {
-        list_atk.getItems().clear();
+    public void updateLists(Player player) {
+
+        var atckList = player.getCurrentPokemon().getCapacities();
+        var pokList = player.getPokemons();
+
+        list_capacity.getItems().clear();
         for (var act : atckList)
-            list_atk.getItems().add(act);
+            list_capacity.getItems().add(act);
+
+        list_swichPokemon.getItems().clear();
+        for (var act : pokList)
+            list_swichPokemon.getItems().add(act);
+
 
         Capacity defaultTest = new Capacity(0, "TestCapacity", null, 5,1,4, DamageClass.physical);
-        list_atk.getItems().add(defaultTest);
+        list_capacity.getItems().add(defaultTest);
+
+
+
     }
 
 
-    private void initAttackList(){
 
-        list_atk.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(list_atk.getSelectionModel().getSelectedItem() == null) return;
-                GameManager.getBattleEvent().playerTurnCapacity(list_atk.getSelectionModel().getSelectedItem());
-            }
-        });
-    }
+
+
 
 
     public void setGameButtonsVisibility(boolean val){
@@ -68,8 +68,10 @@ public class PageFightController implements IController {
         }
         tr.play();
 
-        list_atk.setVisible(false);
-        list_atk.getSelectionModel().setSelectionMode(null);
+        list_capacity.setVisible(false);
+        list_capacity.getSelectionModel().setSelectionMode(null);
+        list_swichPokemon.setVisible(false);
+        list_swichPokemon.getSelectionModel().setSelectionMode(null);
     }
 
 
@@ -97,13 +99,30 @@ public class PageFightController implements IController {
 
 @Override
     public void onInitialized() {
-         initAttackList();
+    initListViews();
         setGameButtonsVisibility(false);
         GameManager.getBattleEvent().fightInitCallback(this);
    }
 
 
 
+    private void initListViews(){
+        list_capacity.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(list_capacity.getSelectionModel().getSelectedItem() == null) return;
+                GameManager.getBattleEvent().playerTurnCapacity(list_capacity.getSelectionModel().getSelectedItem());
+            }
+        });
+        list_swichPokemon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                var pok = list_swichPokemon.getSelectionModel().getSelectedItem();
+                if(pok == null || pok.IsDead() ) return;
+                GameManager.getBattleEvent().playerTurnSwitchPokemon(list_swichPokemon.getSelectionModel().getSelectedItem());
+            }
+        });
+    }
 
 
     @FXML
@@ -128,18 +147,25 @@ public class PageFightController implements IController {
     private HBox hbox_action;
 
     @FXML
-    private ImageView but_attack;
+    private ImageView but_capacity;
 
     @FXML
-    private ListView<Capacity> list_atk;
-
+    private ImageView but_switchPokemon;
 
 
     @FXML
-    void onClickAttack(MouseEvent event) {
-        var actVisible = !list_atk.isVisible();
+    private ListView<Capacity> list_capacity;
 
-        TranslateTransition tr = new TranslateTransition(Duration.millis(200),list_atk);
+    @FXML
+    private ListView<PokemonCreature> list_swichPokemon;
+
+
+
+
+    private void onPressImageButton(ListView<?> linkedList){
+        var actVisible = !linkedList.isVisible();
+
+        TranslateTransition tr = new TranslateTransition(Duration.millis(200),linkedList);
 
         tr.setCycleCount(1);
 
@@ -147,31 +173,64 @@ public class PageFightController implements IController {
 
             tr.setFromY(400f);
             tr.setToY(0f);
-            list_atk.setVisible(actVisible);
+            linkedList.setVisible(actVisible);
+
+            if(linkedList != list_capacity && list_capacity.isVisible()) onPressImageButton(list_capacity);
+            if(linkedList != list_swichPokemon && list_swichPokemon.isVisible()) onPressImageButton(list_swichPokemon);
+
         }else{
             tr.setFromY(0f);
             tr.setToY(400f);
 
-            tr.setOnFinished((e) ->  list_atk.setVisible(actVisible));
+            tr.setOnFinished((e) ->  linkedList.setVisible(actVisible));
         }
-
         tr.play();
-
     }
 
+    private void onDragImageButton(ImageView view){
+        ColorAdjust blackout = new ColorAdjust();
+        blackout.setBrightness(-0.5f);
+        view.setEffect(blackout);
+    }
+
+    private void onReleaseImageButton(ImageView view){
+        ColorAdjust blackout = new ColorAdjust();
+        blackout.setBrightness(0f);
+        view.setEffect(blackout);
+    }
+
+
+
+    @FXML
+    void onClickAttack(MouseEvent event) {
+        onPressImageButton(list_capacity);
+    }
 
     @FXML
     void onAttackDrag(MouseEvent event) {
-        ColorAdjust blackout = new ColorAdjust();
-        blackout.setBrightness(-0.5f);
-        but_attack.setEffect(blackout);
+    onDragImageButton(but_capacity);
     }
 
     @FXML
-    void onAttackEnd(MouseEvent event) {
-        ColorAdjust blackout = new ColorAdjust();
-        blackout.setBrightness(0f);
-        but_attack.setEffect(blackout);
+    void onAttackRelease(MouseEvent event) {
+        onReleaseImageButton(but_capacity);
+    }
+
+
+
+    @FXML
+    void onClickChangePokemon(MouseEvent event) {
+        onPressImageButton(list_swichPokemon);
+    }
+
+    @FXML
+    void onChangePokemonRelease(MouseEvent event) {
+        onReleaseImageButton(but_switchPokemon);
+    }
+
+    @FXML
+    void onChangePokemonDrag(MouseEvent event) {
+        onDragImageButton (but_switchPokemon);
     }
 
 

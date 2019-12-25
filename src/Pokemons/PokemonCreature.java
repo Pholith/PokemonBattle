@@ -28,9 +28,21 @@ public class PokemonCreature  implements java.io.Serializable  {
     }
     public void receiveAttack(Capacity atk){
         hp -= atk.getPower();//??? a voir
+        if(hp < 0){
+            isDead = true;
+            hp = 0;
+        }
     }
 
+    @Override
+    public String toString() {
 
+        final StringBuilder sb = new StringBuilder(descriptor.getName());
+
+
+        sb.append("\n").append(hp).append("/").append(startHp).append("Hp");
+        return sb.toString();
+    }
 
     private final PokemonDescriptor descriptor;
     private ArrayList<Capacity> capacities;
@@ -41,6 +53,7 @@ public class PokemonCreature  implements java.io.Serializable  {
     private int specialAttack;
     private int specialDefense;
     private int speed;
+    private boolean isDead;
 
     public PokemonDescriptor getDescriptor() {
         return descriptor;
@@ -68,5 +81,8 @@ public class PokemonCreature  implements java.io.Serializable  {
     }
     public int getSpeed() {
         return speed;
+    }
+    public boolean IsDead() {
+        return isDead;
     }
 }

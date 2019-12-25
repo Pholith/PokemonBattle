@@ -62,11 +62,8 @@ public class GameManager  {
         }
 
 
-        var p1 = new Player();
-        p1.pokemons = team;
-
-        var p2 = new Player();
-        p2.pokemons = team;
+        var p1 = new Player(team);
+        var p2 = new Player(team);
 
 
         battleEvent.startFight(p1, p2);

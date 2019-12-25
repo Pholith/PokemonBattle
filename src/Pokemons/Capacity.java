@@ -54,6 +54,7 @@ public class Capacity {
         return damageClass;
     }
 
+    /*
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Capacity{");
@@ -67,4 +68,22 @@ public class Capacity {
         sb.append('}');
         return sb.toString();
     }
+    */
+
+    @Override
+    public String toString() {
+        StringBuilder bld = new StringBuilder();
+        bld.append(name);
+        bld.append("\n");
+        bld.append("Power:");
+        bld.append(power);
+        bld.append(", ");
+        bld.append(damageClass.toString());
+        bld.append(" damages");
+
+        return bld.toString();
+    }
+
+
+
 }
