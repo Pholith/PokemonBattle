@@ -2,6 +2,8 @@ package managers;
 
 
 import Pokemons.PokemonCreature;
+import base.Player;
+import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -53,10 +55,25 @@ public class GameManager  {
 
 
     public void startFight(){
-        switchPage("fightPage");
+
+        if(team == null || team.size() == 0){
+            new TextPopupArea("Vous ne pouvez pas engager un combat sans avoir constitué une équipe de pokémon.", "[vincent a voir ensb vu qu'il faut que le joueur 1 et le joueur 2 aient une team]");
+    return;
+        }
+
+
+        var p1 = new Player();
+        p1.pokemons = team;
+
+        var p2 = new Player();
+        p2.pokemons = team;
+
+
+        battleEvent.startFight(p1, p2);
     }
 
-    public void switchPage(String pageName){
+
+     public void switchPage(String pageName){
         assert(pageManager != null);
         pageManager.switchPage(pageName);
     }

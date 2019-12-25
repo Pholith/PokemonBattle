@@ -3,7 +3,7 @@ package Pokemons;
 import java.util.*;
 
 //  A PokemonDescriptor is a descriptor of a PokemonCreature
-public class PokemonDescriptor {
+public class PokemonDescriptor  implements java.io.Serializable {
 
     /**
      * @param ID

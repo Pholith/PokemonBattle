@@ -1,5 +1,6 @@
 package base;
 
+import Pokemons.PokemonCreature;
 import Pokemons.PokemonDescriptor;
 
 import java.util.ArrayList;
@@ -9,9 +10,10 @@ public class Player {
 
 
     private final String name = "aplayer";
-private ArrayList<PokemonDescriptor> pokemons = new ArrayList<PokemonDescriptor>();
+public ArrayList<PokemonCreature> pokemons = new ArrayList<PokemonCreature>();
 
 
-
-
+    public PokemonCreature getCurrentPokemon() {
+    return pokemons.get(0);
+    }
 }

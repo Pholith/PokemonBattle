@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * 
  */
-public class PokemonCreature {
+public class PokemonCreature  implements java.io.Serializable  {
 
     /**
      * test
@@ -19,16 +19,23 @@ public class PokemonCreature {
         this.capacities = new ArrayList<>();
         //this.capacities.addAll(capacities);
         hp = 100;
+        startHp = hp;
         attack = Objects.hash(descriptor.getID()) % 100;
         defense = Objects.hash(attack) % 100;
         specialAttack = Objects.hash(defense) % 100;
         specialDefense = Objects.hash(specialAttack) % 100;
         speed = Objects.hash(specialDefense) % 100;
     }
+    public void receiveAttack(Capacity atk){
+        hp -= atk.getPower();//??? a voir
+    }
+
+
 
     private final PokemonDescriptor descriptor;
     private ArrayList<Capacity> capacities;
     private int hp;
+    private int startHp;
     private int attack;
     private int defense;
     private int specialAttack;
@@ -43,6 +50,9 @@ public class PokemonCreature {
     }
     public int getHp() {
         return hp;
+    }
+    public int getStartHp() {
+        return startHp;
     }
     public int getAttack() {
         return attack;

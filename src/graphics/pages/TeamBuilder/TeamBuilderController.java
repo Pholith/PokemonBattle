@@ -95,6 +95,7 @@ public class TeamBuilderController implements Initializable {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+
         types.setText(descriptor.typesToString());
         PokemonCreature pokemon = new PokemonCreature(descriptor, null);
         hpLabel.setText(        String.valueOf(pokemon.getHp()));
@@ -126,6 +127,9 @@ public class TeamBuilderController implements Initializable {
         team = FXCollections.observableArrayList();
         teamList.setItems(team);
     }
+
+
+
 
     private void updateManagerTeam() {
         GameManager.GetInstance().setTeam(team);

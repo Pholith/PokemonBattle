@@ -28,7 +28,7 @@
                   <Image url="@../../../resources/pokemons_img/001.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="omg_pok2" fitHeight="117.0" fitWidth="119.0" layoutX="610.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="img_pok2" fitHeight="117.0" fitWidth="119.0" layoutX="610.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/pokemons_img/001.png" />
                </image>

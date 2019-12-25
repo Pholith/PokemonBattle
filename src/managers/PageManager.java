@@ -35,7 +35,6 @@ public class PageManager extends Application {
         private HashMap<String, URI> screenMap = new HashMap<>();
         private Scene main;
         private Pane currentPanel;
-        private URL dialogBoxUrl;
 
 
     public PageManager() {

@@ -5,13 +5,17 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onPopupClick" opacity="0.0" prefHeight="113.0" prefWidth="584.0" style="-fx-border-radius: 0px; -fx-border-width: 5px; -fx-border-color: orange; -fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onPopupClick" opacity="0.0" prefHeight="507.0" prefWidth="861.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="text_zone" alignment="TOP_LEFT" prefHeight="107.0" prefWidth="481.0" text="aa aa aa" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Circle fx:id="circle_nextText" fill="WHITE" layoutX="562.0" layoutY="84.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <AnchorPane layoutX="139.0" layoutY="353.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="113.0" prefWidth="584.0" style="-fx-border-radius: 0px; -fx-border-width: 5px; -fx-border-color: orange; -fx-background-color: black;">
+         <children>
+            <Label fx:id="text_zone" alignment="TOP_LEFT" prefHeight="107.0" prefWidth="481.0" text="aa aa aa" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Circle fx:id="circle_nextText" fill="WHITE" layoutX="562.0" layoutY="84.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

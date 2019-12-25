@@ -1,6 +1,9 @@
 package graphics.pages.fightPage;
 
 import Pokemons.Attack;
+import Pokemons.Capacity;
+import Pokemons.DamageClass;
+import Pokemons.PokemonType;
 import base.IController;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -13,42 +16,40 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import managers.GameManager;
 
+import java.util.ArrayList;
+
 public class PageFightController implements IController {
 
 
-    public void updteAttackList() {
 
 
+    public void updateCapacityList(ArrayList<Capacity> atckList) {
+        list_atk.getItems().clear();
+        for (var act : atckList)
+            list_atk.getItems().add(act);
 
-       addNewAttack(new Attack("Attack 1 :","Ultra powerfull vomit."));
-        addNewAttack(new Attack("Attack 2 :","Ultra powerfull laser."));
-       addNewAttack(new Attack("Attack 3 :","billard insult."));
-       addNewAttack(new Attack("Attack 4 :","ak47 deflagration."));
-       addNewAttack(new Attack("Attack 5 :","general métal action."));
+        Capacity defaultTest = new Capacity(0, "TestCapacity", null, 5,1,4, DamageClass.physical);
+        list_atk.getItems().add(defaultTest);
     }
 
-
-    private void addNewAttack(Attack atk) {
-        list_atk.getItems().add(atk);
-
-    }
 
     private void initAttackList(){
 
         list_atk.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                GameManager.getBattleEvent().attack(list_atk.getSelectionModel().getSelectedItem());
+                if(list_atk.getSelectionModel().getSelectedItem() == null) return;
+                GameManager.getBattleEvent().playerTurnCapacity(list_atk.getSelectionModel().getSelectedItem());
             }
         });
     }
-
 
 
     public void setGameButtonsVisibility(boolean val){
@@ -65,14 +66,29 @@ public class PageFightController implements IController {
             tr.setToY(100);
             tr.setOnFinished( (o) -> hbox_action.setVisible(val)  );
         }
-
         tr.play();
-
 
         list_atk.setVisible(false);
         list_atk.getSelectionModel().setSelectionMode(null);
+    }
 
 
+    public void setPlayerImage(Image img, int idPlayer){
+      if((idPlayer%2)==0)
+          img_pok1.setImage(img);
+      else
+          img_pok2.setImage(img);
+    }
+
+    public void setPlayerHp(double hp,double maxHp, int idPlayer){
+        if((idPlayer%2)==0) {
+            bar1.setProgress(hp/maxHp);
+            bar1_txt.setText(((int)hp)+"/"+(int)maxHp+"PV");
+        }
+        else {
+            bar2.setProgress(hp/maxHp);
+            bar2_txt.setText(((int)hp)+"/"+(int)maxHp+"PV");
+        }
     }
 
 
@@ -81,12 +97,9 @@ public class PageFightController implements IController {
 
 @Override
     public void onInitialized() {
-
-
          initAttackList();
         setGameButtonsVisibility(false);
-        updteAttackList();
-        GameManager.getBattleEvent().startFight(this);
+        GameManager.getBattleEvent().fightInitCallback(this);
    }
 
 
@@ -118,7 +131,7 @@ public class PageFightController implements IController {
     private ImageView but_attack;
 
     @FXML
-    private ListView<Attack> list_atk;
+    private ListView<Capacity> list_atk;
 
 
 
