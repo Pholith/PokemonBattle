@@ -1,5 +1,6 @@
 package Pokemons;
 
+import utils.Collections;
 import utils.InvalidFormatException;
 import utils.Strings;
 
@@ -7,10 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * 
@@ -26,13 +24,22 @@ public class Capacities {
 
     private ArrayList<Capacity> capacities;
     private HashMap<Integer, Capacity> capacitiesMap;
+    private HashMap<PokemonType, List<Capacity>> capacitiesMapByType;
 
+    public Capacity getRandomCapacity(PokemonType type) {
+        return Collections.getRandom(getCapacities(type));
+    }
+    public List<Capacity> getRandomCapacities(PokemonType type, int amount) {
+        return Collections.getRandoms(getCapacities(type), amount);
+    }
     /**
      * Return a list of capacities
      * @return List containing all the capacities
      */
     public List<Capacity> getCapacities() { return capacities; }
-
+    public List<Capacity> getCapacities(PokemonType type) {
+        return capacitiesMapByType.get(type);
+    }
     /**
      * Get a Capacity searching by his id
      * @param id the name of the type
@@ -45,6 +52,7 @@ public class Capacities {
     private void buildCapacities() {
         capacities = new ArrayList<>();
         capacitiesMap = new HashMap<>();
+        capacitiesMapByType = new HashMap<>();
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/resources/moves.csv"))))
         {
             String currLine;
@@ -55,7 +63,6 @@ public class Capacities {
 
                 if (splitedLine.length < 6) throw new InvalidFormatException();
 
-                System.out.println(Arrays.toString(splitedLine));
                 Capacity capacity = new Capacity(
                         Integer.parseInt(splitedLine[0]),
                         splitedLine[1],
@@ -65,17 +72,17 @@ public class Capacities {
                         (splitedLine[5].equals("")) ? 100: Integer.parseInt(splitedLine[5]),
                         DamageClass.valueOf(Strings.noSpaces(splitedLine[6]))
                 );
+
+                // add the capacity to collections
+                capacitiesMapByType.computeIfAbsent(capacity.getType(), k -> new ArrayList<Capacity>());
+                capacitiesMapByType.get(capacity.getType()).add(capacity);
                 capacities.add(capacity);
                 capacitiesMap.put(capacity.getId(), capacity);
             }
-
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
     }
-
-
-
 }

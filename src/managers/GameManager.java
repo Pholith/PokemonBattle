@@ -1,6 +1,8 @@
 package managers;
 
 
+import Pokemons.Capacities;
+import Pokemons.Pokedex;
 import Pokemons.PokemonCreature;
 import base.Player;
 import graphics.utilities.dialogArea.TextPopupArea;
@@ -18,9 +20,9 @@ public class GameManager  {
     private GameManager(){
         super();
         team = new ArrayList<>();
+        capacities = new Capacities();
+        pokedex = new Pokedex();
     }
-
-
 
 
     private PageManager pageManager;
@@ -37,11 +39,9 @@ public class GameManager  {
     private void Init() throws InterruptedException {
         pageManager = pageManager.startWindow();
 
-
         while(true){
 
         }
-
     }
 
     public void AddSreenPane(Pane pane){
@@ -58,19 +58,17 @@ public class GameManager  {
 
         if(team == null || team.size() == 0){
             new TextPopupArea("Vous ne pouvez pas engager un combat sans avoir constitué une équipe de pokémon.", "[vincent a voir ensb vu qu'il faut que le joueur 1 et le joueur 2 aient une team]");
-    return;
+            return;
         }
-
 
         var p1 = new Player(team);
         var p2 = new Player(team);
-
 
         battleEvent.startFight(p1, p2);
     }
 
 
-     public void switchPage(String pageName){
+    public void switchPage(String pageName){
         assert(pageManager != null);
         pageManager.switchPage(pageName);
     }
@@ -82,5 +80,15 @@ public class GameManager  {
     }
     public void setTeam(List<PokemonCreature> team) {
         this.team = new ArrayList<>(team);
+    }
+
+    private Pokedex pokedex;
+    private Capacities capacities;
+
+    public Pokedex getPokedex() {
+        return pokedex;
+    }
+    public Capacities getCapacities() {
+        return capacities;
     }
 }

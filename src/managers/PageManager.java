@@ -29,8 +29,6 @@ import java.util.HashMap;
 public class PageManager extends Application {
 
 
-
-
         private static PageManager instance;
         private HashMap<String, URI> screenMap = new HashMap<>();
         private Scene main;

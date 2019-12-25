@@ -1,9 +1,10 @@
 package Pokemons;
 
+import managers.GameManager;
+import utils.Collections;
 import utils.InvalidFormatException;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -28,6 +29,19 @@ public class Pokedex {
     }
     private ArrayList<PokemonDescriptor> pokemons;
     private static HashMap<String, PokemonDescriptor> pokemonMapName;
+
+    public Collection<PokemonCreature> getRandomTeam(int numberOfPokemons) {
+        HashSet<PokemonCreature> team = new HashSet<>();
+        for (int i = 0; i < numberOfPokemons; i++) {
+            PokemonDescriptor desc = getRandomDescriptor();
+            team.add(new PokemonCreature(desc, GameManager.GetInstance().getCapacities().getRandomCapacities(Collections.getRandom(desc.getTypes()), 4)));
+        }
+        return team;
+    }
+
+    private PokemonDescriptor getRandomDescriptor() {
+        return pokemons.get((int) (Math.random()*pokemons.size()));
+    }
 
     private void buildPokemons() {
         pokemons = new ArrayList<>();

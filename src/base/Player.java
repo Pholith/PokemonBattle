@@ -9,7 +9,7 @@ import java.util.List;
 public class Player {
 
 
-    private final String name = "aplayer";
+    private final String name = "player";
     private final ArrayList<PokemonCreature> pokemons;
     private int selectedPokemon = 0;
 
