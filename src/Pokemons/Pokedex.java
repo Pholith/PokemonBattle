@@ -34,7 +34,10 @@ public class Pokedex {
         List<PokemonCreature> team = new ArrayList<>();
         for (int i = 0; i < numberOfPokemons; i++) {
             PokemonDescriptor desc = getRandomDescriptor();
-            team.add(new PokemonCreature(desc, GameManager.GetInstance().getCapacities().getRandomCapacities(Collections.getRandom(desc.getTypes()), 4)));
+            team.add(new PokemonCreature(
+                    desc,
+                    GameManager.GetInstance().getStats().getBaseStat(desc.getID()),
+                    GameManager.GetInstance().getCapacities().getRandomCapacities(Collections.getRandom(desc.getTypes()), 4)));
         }
         return team;
     }

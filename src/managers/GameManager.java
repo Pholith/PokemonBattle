@@ -4,6 +4,7 @@ package managers;
 import Pokemons.Capacities;
 import Pokemons.Pokedex;
 import Pokemons.PokemonCreature;
+import Pokemons.Stats;
 import base.Player;
 import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.scene.layout.Pane;
@@ -22,6 +23,7 @@ public class GameManager  {
         team = new ArrayList<>();
         capacities = new Capacities();
         pokedex = new Pokedex();
+        stats = new Stats();
     }
 
 
@@ -73,6 +75,7 @@ public class GameManager  {
         pageManager.switchPage(pageName);
     }
 
+    /// ====== Model objects
     private ArrayList<PokemonCreature> team;
 
     public ArrayList<PokemonCreature> getTeam() {
@@ -82,13 +85,17 @@ public class GameManager  {
         this.team = new ArrayList<>(team);
     }
 
-    private Pokedex pokedex;
-    private Capacities capacities;
+    private final Pokedex pokedex;
+    private final Capacities capacities;
+    private final Stats stats;
 
     public Pokedex getPokedex() {
         return pokedex;
     }
     public Capacities getCapacities() {
         return capacities;
+    }
+    public Stats getStats() {
+        return stats;
     }
 }

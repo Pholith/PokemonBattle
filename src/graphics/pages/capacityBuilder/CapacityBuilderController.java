@@ -36,7 +36,7 @@ public class CapacityBuilderController implements Initializable {
     // Build the pokemon with it given descriptor and choiced capacities
     private final PokemonDescriptor desc;
     private PokemonCreature getPokemon() {
-        return new PokemonCreature(desc, capacityListUi.getItems());
+        return new PokemonCreature(desc, GameManager.GetInstance().getStats().getBaseStat(desc.getID()) ,capacityListUi.getItems());
     }
 
     @FXML

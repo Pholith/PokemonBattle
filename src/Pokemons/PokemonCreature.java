@@ -9,51 +9,16 @@ import java.util.Objects;
  */
 public class PokemonCreature  implements java.io.Serializable  {
 
-    /**
-     * test
-     * @param descriptor
-     * @param capacities
-     */
-    public PokemonCreature(PokemonDescriptor descriptor, List<Capacity> capacities) {
-        this.descriptor = descriptor;
-        this.capacities = new ArrayList<>();
-        //this.capacities.addAll(capacities);
-        hp = 100;
-        startHp = hp;
-        attack = Objects.hash(descriptor.getID()) % 100;
-        defense = Objects.hash(attack) % 100;
-        specialAttack = Objects.hash(defense) % 100;
-        specialDefense = Objects.hash(specialAttack) % 100;
-        speed = Objects.hash(specialDefense) % 100;
-    }
-    public void receiveAttack(Capacity atk){
-        hp -= atk.getPower();//??? a voir
-        if(hp < 0){
-            isDead = true;
-            hp = 0;
-        }
-    }
-
-    @Override
-    public String toString() {
-
-        final StringBuilder sb = new StringBuilder(descriptor.getName());
-
-
-        sb.append("\n").append(hp).append("/").append(startHp).append("Hp");
-        return sb.toString();
-    }
-
     private final PokemonDescriptor descriptor;
-    private ArrayList<Capacity> capacities;
+    private final ArrayList<Capacity> capacities;
     private int hp;
-    private int startHp;
     private int attack;
     private int defense;
     private int specialAttack;
     private int specialDefense;
     private int speed;
     private boolean isDead;
+    private BaseStat baseStat;
 
     public PokemonDescriptor getDescriptor() {
         return descriptor;
@@ -63,9 +28,6 @@ public class PokemonCreature  implements java.io.Serializable  {
     }
     public int getHp() {
         return hp;
-    }
-    public int getStartHp() {
-        return startHp;
     }
     public int getAttack() {
         return attack;
@@ -84,5 +46,44 @@ public class PokemonCreature  implements java.io.Serializable  {
     }
     public boolean IsDead() {
         return isDead;
+    }
+    public BaseStat getBaseStat() {return baseStat; }
+    public int getStartHp() { return baseStat.getHp(); }
+
+    /**
+     * A PokemonCreature is a mob
+     * @param descriptor the descriptor of this pokemon
+     * @param stat the normal base stats of this pokemon
+     * @param capacities the choiced capacities of this pokemon
+     */
+    public PokemonCreature(PokemonDescriptor descriptor, BaseStat stat, List<Capacity> capacities) {
+        this.descriptor = descriptor;
+        this.capacities = new ArrayList<>();
+        baseStat = stat;
+        //this.capacities.addAll(capacities);
+        hp = stat.getHp();
+        attack = stat.getAttack();
+        defense = stat.getDefense();
+        specialAttack = stat.getSpecialAttack();
+        specialDefense = stat.getSpecialDefense();
+        speed = stat.getSpeed();
+    }
+
+    public void receiveAttack(Capacity atk){
+        hp -= atk.getPower();//??? a voir
+        if(hp < 0){
+            isDead = true;
+            hp = 0;
+        }
+    }
+
+
+    @Override
+    public String toString() {
+
+        final StringBuilder sb = new StringBuilder(descriptor.getName());
+
+        sb.append("\n").append(hp).append("/").append(baseStat.getHp()).append("Hp");
+        return sb.toString();
     }
 }

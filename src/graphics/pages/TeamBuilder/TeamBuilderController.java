@@ -123,7 +123,7 @@ public class TeamBuilderController implements Initializable {
         }
 
         types.setText(descriptor.typesToString());
-        PokemonCreature pokemon = new PokemonCreature(descriptor, null);
+        PokemonCreature pokemon = new PokemonCreature(descriptor, GameManager.GetInstance().getStats().getBaseStat(descriptor.getID()), null);
         hpLabel.setText(        String.valueOf(pokemon.getHp()));
         attackLabel.setText(    String.valueOf(pokemon.getAttack()));
         defenseLabel.setText(   String.valueOf(pokemon.getDefense()));
