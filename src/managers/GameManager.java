@@ -39,7 +39,7 @@ public class GameManager  {
     private void Init() throws InterruptedException {
         pageManager = pageManager.startWindow();
 
-        while(true){
+        while (true) {
 
         }
     }
@@ -57,12 +57,12 @@ public class GameManager  {
     public void startFight(){
 
         if(team == null || team.size() == 0){
-            new TextPopupArea("Vous ne pouvez pas engager un combat sans avoir constitué une équipe de pokémon.", "[vincent a voir ensb vu qu'il faut que le joueur 1 et le joueur 2 aient une team]");
+            new TextPopupArea("You can't start a battle without a team.");
             return;
         }
 
         var p1 = new Player(team);
-        var p2 = new Player(team);
+        var p2 = new Player(pokedex.getRandomTeam(team.size()));
 
         battleEvent.startFight(p1, p2);
     }

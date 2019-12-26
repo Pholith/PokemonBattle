@@ -4,18 +4,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="861.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.pages.page2.Page2Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576" prefWidth="1024" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.pages.page2.Page2Controller">
    <children>
-      <AnchorPane id="Page1" prefHeight="507.0" prefWidth="861.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="but_inventory" layoutX="340.0" layoutY="323.0" mnemonicParsing="false" onAction="#but_inventory_action" prefHeight="25.0" prefWidth="182.0" text="inventory??" />
-            <Text layoutX="164.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Page 2">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Main menu">
                <font>
                   <Font size="35.0" />
                </font></Text>
-            <Button fx:id="but_pokedex" layoutX="340.0" layoutY="265.0" mnemonicParsing="false" onAction="#but_pokedex_action" prefHeight="25.0" prefWidth="182.0" text="Team Builder" />
-            <Button fx:id="but_fight" layoutX="340.0" layoutY="201.0" mnemonicParsing="false" onAction="#but_fight_action" prefHeight="25.0" prefWidth="182.0" text="fight" />
+            <Button fx:id="but_fight" mnemonicParsing="false" onAction="#but_fight_action" prefHeight="63.0" prefWidth="230.0" text="Fight !">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <Button fx:id="but_pokedex" mnemonicParsing="false" onAction="#but_pokedex_action" prefHeight="45.0" prefWidth="229.0" text="Build your team !">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Button fx:id="but_inventory" mnemonicParsing="false" onAction="#but_inventory_action" prefHeight="25.0" prefWidth="182.0" text="inventory??">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
          </children>
-      </AnchorPane>
+      </VBox>
    </children>
 </AnchorPane>

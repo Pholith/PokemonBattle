@@ -30,8 +30,8 @@ public class Pokedex {
     private ArrayList<PokemonDescriptor> pokemons;
     private static HashMap<String, PokemonDescriptor> pokemonMapName;
 
-    public Collection<PokemonCreature> getRandomTeam(int numberOfPokemons) {
-        HashSet<PokemonCreature> team = new HashSet<>();
+    public List<PokemonCreature> getRandomTeam(int numberOfPokemons) {
+        List<PokemonCreature> team = new ArrayList<>();
         for (int i = 0; i < numberOfPokemons; i++) {
             PokemonDescriptor desc = getRandomDescriptor();
             team.add(new PokemonCreature(desc, GameManager.GetInstance().getCapacities().getRandomCapacities(Collections.getRandom(desc.getTypes()), 4)));

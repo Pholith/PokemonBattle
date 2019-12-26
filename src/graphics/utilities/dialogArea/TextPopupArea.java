@@ -47,7 +47,6 @@ public class TextPopupArea {
 
             Rectangle rect = new Rectangle();
 
-
             thisPanel.getChildren().add(rect);
 
             FadeTransition fade = new FadeTransition(Duration.millis(300), thisPanel);
@@ -55,17 +54,17 @@ public class TextPopupArea {
             fade.setToValue(1d);
             fade.play();
 
-            ScaleTransition st = new ScaleTransition(Duration.millis(300), thisPanel);
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), thisPanel);
             st.setFromX(0f);
             st.setToX(1f);
             st.setCycleCount(1);
             st.play();
             nextText();
 
-            TranslateTransition tr = new TranslateTransition(Duration.millis(300), circle_nextText);
+            TranslateTransition tr = new TranslateTransition(Duration.millis(100), circle_nextText);
 
             tr.setFromY(0);
-            tr.setToY(10);
+            tr.setToY(20);
             tr.setCycleCount (Timeline.INDEFINITE);
             tr.setAutoReverse(true);
             tr.play();
@@ -113,8 +112,6 @@ public class TextPopupArea {
             actionOnFinish.run();
         });
     }
-
-
 
 
 

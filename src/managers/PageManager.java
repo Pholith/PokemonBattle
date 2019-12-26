@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import utils.Constants;
+import utils.ISetStage;
 import utils.PageNotFoundException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -83,10 +84,12 @@ public class PageManager extends Application {
 
         @Override
         public void start(Stage primaryStage) throws Exception {
-            currentPanel = FXMLLoader.load( Paths.get(Constants.pagesDir + "/mainPage/Page.fxml").toUri().toURL() );
+            currentPanel = FXMLLoader.load( Paths.get(Constants.pagesDir + "/mainPage/Page.fxml").toUri().toURL());
             primaryStage.setTitle("Pokemon");
             main = new Scene(currentPanel);
-            main.getStylesheets().add("/resources/fonts/pokemon.css");
+            Font f = Font.loadFont(getClass().getResourceAsStream("/resources/fonts/Pokemon Classic.ttf"), 16);
+            System.out.println("Loading font: " + f.getName());
+            main.getStylesheets().add(getClass().getResource("/resources/fonts/pokemon.css").toString());
             primaryStage.setScene(main);
             primaryStage.show();
         }
@@ -118,11 +121,13 @@ public class PageManager extends Application {
 
             try {
                 FXMLLoader loader = new FXMLLoader(screenMap.get(name).toURL());
-                                 currentPanel = loader.load();
-                var controller =loader.getController();
+                currentPanel = loader.load();
+                var controller = loader.getController();
 
+                if(controller instanceof ISetStage)
+                    ((ISetStage)controller).setStage((Stage) main.getWindow());
                 if(controller instanceof IController)
-                ((IController)controller).onInitialized();
+                    ((IController)controller).onInitialized();
 
             } catch (Exception e) {
                 e.printStackTrace();

@@ -15,13 +15,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import managers.GameManager;
+import utils.ISetStage;
 
-import java.util.ArrayList;
 
-public class PageFightController implements IController {
-
+public class PageFightController implements IController, ISetStage {
 
 
 
@@ -42,12 +42,7 @@ public class PageFightController implements IController {
         Capacity defaultTest = new Capacity(0, "TestCapacity", null, 5,1,4, DamageClass.physical);
         list_capacity.getItems().add(defaultTest);
 
-
-
     }
-
-
-
 
 
 
@@ -93,16 +88,28 @@ public class PageFightController implements IController {
         }
     }
 
+    // I need the stage for the image weight...
+    private Stage myStage;
+    public void setStage(Stage stage) {
+        myStage = stage;
+        System.out.println(stage);
+    }
 
-
-
-
-@Override
+    @Override
     public void onInitialized() {
-    initListViews();
+        initListViews();
         setGameButtonsVisibility(false);
         GameManager.getBattleEvent().fightInitCallback(this);
-   }
+
+        assert myStage != null;
+        try {
+            imageBackground.setImage(new Image(getClass().getResource("/resources/backgrounds_img/fightBg1.png").toString()));
+            imageBackground.fitWidthProperty().bind(myStage.widthProperty());
+            imageBackground.setPreserveRatio(true);
+        } catch (RuntimeException e) {
+            System.err.println(e.toString());
+        }
+    }
 
 
 
@@ -127,31 +134,25 @@ public class PageFightController implements IController {
 
     @FXML
     private ImageView img_pok1;
-
+    @FXML
+    private ImageView imageBackground;
     @FXML
     private ImageView img_pok2;
-
     @FXML
     private ProgressBar bar1;
-
     @FXML
     private ProgressBar bar2;
-
     @FXML
     private Label bar1_txt;
-
     @FXML
     private Label bar2_txt;
-
     @FXML
     private HBox hbox_action;
-
     @FXML
     private ImageView but_capacity;
 
     @FXML
     private ImageView but_switchPokemon;
-
 
     @FXML
     private ListView<Capacity> list_capacity;
@@ -232,7 +233,5 @@ public class PageFightController implements IController {
     void onChangePokemonDrag(MouseEvent event) {
         onDragImageButton (but_switchPokemon);
     }
-
-
 
 }

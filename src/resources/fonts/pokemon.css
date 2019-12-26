@@ -1,16 +1,69 @@
 
-@font-face {
-    src: url('Minecraft.ttf');
-    /*la font familly = le nom ecrit dans le font.ttf*/
+* {
+    -fx-font-family: "Pokemon Classic";
+	-fx-text-fill: white;
+	-fx-fill: white;
 }
 
-*{
-    -fx-font-family: 'Minecraft';
+.pane, .border-pane, .anchor-pane, .split-pane, .table-view {
+    -fx-background-color: black;
+}
+.list-view {
+    -fx-background-color: black;
+	-fx-border-color: white;
+	-fx-border-width: 2px;
+}
+.table-view .column-header {
+    -fx-background-color: black;
+}
+.table-view .filler {
+    -fx-background-color: black;
+}
+
+.table-view .table-cell {
+    -fx-background-color: black;
+	-fx-border-color: white;
+	-fx-border-width: 1px;
+}
+.table-view > .virtual-flow > .scroll-bar:vertical .thumb {
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+
+.table-view > .virtual-flow > .scroll-bar > .increment-button,
+.table-view > .virtual-flow > .scroll-bar > .decrement-button {
+    -fx-opacity: 0;
+}
+
+.list-view .virtual-flow .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.list-view > .virtual-flow > .scroll-bar > .increment-button,
+.list-view > .virtual-flow > .scroll-bar > .decrement-button {
+    -fx-opacity: 0;
 }
 
 .text, .button {
-	-fx-font-size: 13px;
 	-fx-text-fill: white;
+}
+.text {
+	-fx-font-size: 12px;
+}
+.button {
+	-fx-font-size: 13px;
+}
+.text-field {
+	-fx-border-color: white;
+	-fx-border-width: 2px;
+    -fx-background-color: black;
 }
 
 .root{
@@ -19,14 +72,13 @@
 
 .button {
     -fx-background-color: black;
-    -fx-border-width: 4px;
+    -fx-border-width: 3px;
     -fx-border-color: orange;
     -fx-label-padding: 1px;
 
     -fx-border-radius: 0px;
     -fx-background-radius: 0px;
 }
-
 
 .list-cell{
     -fx-background-color: black;
