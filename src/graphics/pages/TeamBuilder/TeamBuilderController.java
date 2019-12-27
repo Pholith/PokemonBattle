@@ -63,6 +63,7 @@ public class TeamBuilderController implements Initializable {
     @FXML
     private void onClickAddPokemon(ActionEvent event) {
         if (pokedexList.getSelectionModel().getSelectedItem() == null) return;
+        GameManager.getSoundManager().playBip();
         Parent root;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/graphics/pages/capacityBuilder/Page.fxml"));
@@ -100,6 +101,7 @@ public class TeamBuilderController implements Initializable {
     private void removePokemon(MouseEvent event) {
         PokemonCreature pokemon = teamList.getSelectionModel().getSelectedItem();
         team.remove(pokemon);
+        GameManager.getSoundManager().playBip();
         updateManagerTeam();
     }
 
@@ -112,6 +114,7 @@ public class TeamBuilderController implements Initializable {
     private void selectPokemon(MouseEvent event) {
         PokemonDescriptorBean selectedBean = pokedexList.getSelectionModel().getSelectedItem();
         if (selectedBean == null) return;
+        GameManager.getSoundManager().playBip();
         PokemonDescriptor descriptor = GameManager.GetInstance().getPokedex().getFromName(selectedBean.getName());
         pokemonName.setText(descriptor.getName());
 

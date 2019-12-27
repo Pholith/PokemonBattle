@@ -113,11 +113,10 @@ public class PageManager extends Application {
 
 
         void switchPage(String name) {
+            if(!screenMap.containsKey(name))
+                throw new UnkownPageException(name);
 
-        if(!screenMap.containsKey(name))
-            throw new UnkownPageException(name);
-
-        System.out.println("Load page "+name);
+            System.out.println("Load page "+name);
 
             try {
                 FXMLLoader loader = new FXMLLoader(screenMap.get(name).toURL());
@@ -134,8 +133,6 @@ public class PageManager extends Application {
             }
             main.setRoot(currentPanel);
         }
-
-
 
 
     public void AddPopupPanel(Pane pane) {

@@ -48,6 +48,7 @@ public class CapacityBuilderController implements Initializable {
     @FXML
     private void onClickAddPokemon(ActionEvent event) {
         parentController.addClickAddPokemon(getPokemon());
+        GameManager.getSoundManager().playBip();
         Stage stage = (Stage) pokemonName.getScene().getWindow();
         stage.close();
     }
@@ -57,6 +58,7 @@ public class CapacityBuilderController implements Initializable {
         Capacity selected = allCapacityListUi.getSelectionModel().getSelectedItem();
         if (selected == null) return;
         if (capacityListUi.getItems().size() > 3) return;
+        GameManager.getSoundManager().playBip();
         capacityListUi.getItems().add(selected);
     }
 
@@ -64,6 +66,7 @@ public class CapacityBuilderController implements Initializable {
     private void onCapaciyRemove(MouseEvent event) {
         Capacity selected = capacityListUi.getSelectionModel().getSelectedItem();
         if (selected == null) return;
+        GameManager.getSoundManager().playBip();
         capacityListUi.getItems().remove(selected);
     }
 

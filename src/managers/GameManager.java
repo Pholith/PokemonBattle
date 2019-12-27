@@ -24,12 +24,14 @@ public class GameManager  {
         capacities = new Capacities();
         pokedex = new Pokedex();
         stats = new Stats();
+        soundManager = new SoundManager();
     }
 
-
+    private SoundManager soundManager;
     private PageManager pageManager;
     private BattleEvent battleEvent = new BattleEvent();
     public static BattleEvent getBattleEvent(){return Instance.battleEvent;}
+    public static SoundManager getSoundManager(){return Instance.soundManager;}
 
     //public static PageManager GetPageManager(){return pageManager;}
 
@@ -65,6 +67,7 @@ public class GameManager  {
 
         var p1 = new Player(team);
         var p2 = new Player(pokedex.getRandomTeam(team.size()));
+        soundManager.getFightMusic().play();
 
         battleEvent.startFight(p1, p2);
     }
@@ -72,6 +75,7 @@ public class GameManager  {
 
     public void switchPage(String pageName){
         assert(pageManager != null);
+        soundManager.playBip();
         pageManager.switchPage(pageName);
     }
 

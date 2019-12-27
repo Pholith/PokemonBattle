@@ -167,7 +167,7 @@ public class PageFightController implements IController, ISetStage {
         var actVisible = !linkedList.isVisible();
 
         TranslateTransition tr = new TranslateTransition(Duration.millis(200),linkedList);
-
+        GameManager.getSoundManager().playBip();
         tr.setCycleCount(1);
 
         if(actVisible){
