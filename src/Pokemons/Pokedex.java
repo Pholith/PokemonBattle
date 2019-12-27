@@ -27,8 +27,12 @@ public class Pokedex {
     public PokemonDescriptor getFromName(String name) {
         return pokemonMapName.get(name);
     }
+    public PokemonDescriptor getFromId(int id) {
+        return pokemonMapId.get(id);
+    }
     private ArrayList<PokemonDescriptor> pokemons;
     private static HashMap<String, PokemonDescriptor> pokemonMapName;
+    private static HashMap<Integer, PokemonDescriptor> pokemonMapId;
 
     public List<PokemonCreature> getRandomTeam(int numberOfPokemons) {
         List<PokemonCreature> team = new ArrayList<>();
@@ -49,6 +53,8 @@ public class Pokedex {
     private void buildPokemons() {
         pokemons = new ArrayList<>();
         pokemonMapName = new HashMap<>();
+        pokemonMapId = new HashMap<>();
+
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/resources/pokedex.csv"))))
         {
             String currLine;
@@ -70,6 +76,7 @@ public class Pokedex {
                 );
                 pokemons.add(descriptor);
                 pokemonMapName.put(splitedLine[1], descriptor);
+                pokemonMapId.put(Integer.parseInt(splitedLine[0]), descriptor);
             }
 
         }

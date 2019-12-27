@@ -1,5 +1,6 @@
 package Pokemons;
 
+import managers.GameManager;
 import utils.InvalidFormatException;
 import utils.Strings;
 
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Stats {
 
@@ -16,8 +18,31 @@ public class Stats {
     }
     private HashMap<Integer, BaseStat> statMapId;
     public BaseStat getBaseStat(int id) {
-        return statMapId.get(id);
+        BaseStat stat = statMapId.get(id);
+        if (stat == null ) {
+            System.out.println("BaseStat of this pokemon dont't exist... Generating one random.");
+            return getRandomStat(id);
+        }
+        return stat;
     }
+
+    public BaseStat getRandomStat(int pokemonId) {
+        PokemonDescriptor desc = GameManager.GetInstance().getPokedex().getFromId(pokemonId);
+        //    public BaseStat(int id, String name, int hp, int attack, int defense, int specialAttack, int specialDefense, int speed, int generation, boolean isLegendary) {
+        return new BaseStat(
+                pokemonId,
+                desc.getName(),
+                Objects.hash(pokemonId) % 100,
+                Objects.hash(pokemonId) % 100,
+                Objects.hash(Objects.hash(pokemonId)) % 100,
+                Objects.hash(Objects.hash(pokemonId)) % 100,
+                Objects.hash(Objects.hash(Objects.hash(pokemonId))) % 100,
+                Objects.hash(Objects.hash(Objects.hash(Objects.hash(pokemonId)))) % 100,
+                7,
+                false);
+    }
+
+
 
     private void buildBasicStats() {
         statMapId =  new HashMap<>();
