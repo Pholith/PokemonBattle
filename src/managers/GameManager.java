@@ -6,6 +6,7 @@ import Pokemons.Pokedex;
 import Pokemons.PokemonCreature;
 import Pokemons.Stats;
 import base.Player;
+import base.PlayerBot;
 import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.scene.layout.Pane;
 
@@ -29,7 +30,7 @@ public class GameManager  {
 
     private SoundManager soundManager;
     private PageManager pageManager;
-    private BattleEvent battleEvent = new BattleEvent();
+    private BattleEvent battleEvent = null;
     public static BattleEvent getBattleEvent(){return Instance.battleEvent;}
     public static SoundManager getSoundManager(){return Instance.soundManager;}
 
@@ -65,11 +66,17 @@ public class GameManager  {
             return;
         }
 
-        var p1 = new Player(team);
-        var p2 = new Player(pokedex.getRandomTeam(team.size()));
+        battleEvent = new BattleEvent();
+        var p1 = new Player(team, "Joueur 1");
+        var p2 = new PlayerBot(pokedex.getRandomTeam(team.size()), "L'ordinateur");
         soundManager.getFightMusic().play();
 
         battleEvent.startFight(p1, p2);
+    }
+    public void finishFight() {
+        battleEvent = null;
+        soundManager.getVictorySound().stop();
+        switchPage("mainPage");
     }
 
 
@@ -102,4 +109,6 @@ public class GameManager  {
     public Stats getStats() {
         return stats;
     }
+
+
 }

@@ -59,6 +59,8 @@ public class PokemonCreature  implements java.io.Serializable  {
     public PokemonCreature(PokemonDescriptor descriptor, BaseStat stat, List<Capacity> capacities) {
         this.descriptor = descriptor;
         this.capacities = new ArrayList<>();
+        if(capacities != null)
+        this.capacities.addAll(capacities);
         baseStat = stat;
         //this.capacities.addAll(capacities);
         hp = stat.getHp();
@@ -71,7 +73,7 @@ public class PokemonCreature  implements java.io.Serializable  {
 
     public void receiveAttack(Capacity atk){
         hp -= atk.getPower();//??? a voir
-        if(hp < 0){
+        if(hp <= 0){
             isDead = true;
             hp = 0;
         }

@@ -26,22 +26,7 @@ public class PageFightController implements IController, ISetStage {
 
 
     public void updateLists(Player player) {
-
-        var atckList = player.getCurrentPokemon().getCapacities();
-        var pokList = player.getPokemons();
-
-        list_capacity.getItems().clear();
-        for (var act : atckList)
-            list_capacity.getItems().add(act);
-
-        list_swichPokemon.getItems().clear();
-        for (var act : pokList)
-            list_swichPokemon.getItems().add(act);
-
-
-        Capacity defaultTest = new Capacity(0, "TestCapacity", null, 5,1,4, DamageClass.physical);
-        list_capacity.getItems().add(defaultTest);
-
+player.fillUiList(list_capacity, list_swichPokemon);
     }
 
 
