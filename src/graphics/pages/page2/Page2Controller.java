@@ -25,12 +25,13 @@ public class Page2Controller implements IController {
 
     @FXML
     void but_inventory_action(ActionEvent event) {
-        new TextPopupArea("ahahah", "un super texte !");
+            GameManager.GetInstance().switchPage("loadSave");
     }
 
     @FXML
     void but_pokedex_action(ActionEvent event) {
         GameManager.GetInstance().switchPage("TeamBuilder");
     }
+
 
 }

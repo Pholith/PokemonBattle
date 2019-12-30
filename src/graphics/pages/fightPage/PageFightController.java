@@ -5,8 +5,10 @@ import base.IController;
 import base.Player;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
@@ -14,6 +16,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -140,10 +143,27 @@ player.fillUiList(list_capacity, list_swichPokemon);
     private ImageView but_switchPokemon;
 
     @FXML
+    private ImageView but_options;
+
+
+    @FXML
     private ListView<Capacity> list_capacity;
 
     @FXML
     private ListView<PokemonCreature> list_swichPokemon;
+
+
+    @FXML
+    private AnchorPane panel_settings;
+
+    @FXML
+    private Button but_settings_back;
+
+    @FXML
+    private Button but_settings_save;
+
+    @FXML
+    private Button but_settings_mainMenu;
 
 
 
@@ -218,5 +238,49 @@ player.fillUiList(list_capacity, list_swichPokemon);
     void onChangePokemonDrag(MouseEvent event) {
         onDragImageButton (but_switchPokemon);
     }
+
+
+
+
+    @FXML
+    void onClickOptions(MouseEvent event) {
+panel_settings.setVisible(true);
+        GameManager.getSoundManager().playBip();
+    }
+
+
+    @FXML
+    void onOptionsDrag(MouseEvent event) {
+        onDragImageButton (but_options);
+    }
+
+    @FXML
+    void onOptionsRelease(MouseEvent event) {
+        onReleaseImageButton(but_options);
+    }
+
+
+
+    @FXML
+    void onExitFight(ActionEvent event) {
+        GameManager.getSoundManager().playBip();
+        GameManager.GetInstance().finishFight();
+    }
+
+    @FXML
+    void onExitPanelSettings(ActionEvent event) {
+        GameManager.getSoundManager().playBip();
+        panel_settings.setVisible(false);
+
+    }
+
+    @FXML
+    void onSaveGame(ActionEvent event) {
+        GameManager.getSoundManager().playBip();
+        GameManager.getBattleEvent().SaveGame();
+    }
+
+
+
 
 }

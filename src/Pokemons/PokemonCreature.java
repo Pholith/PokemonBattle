@@ -1,5 +1,6 @@
 package Pokemons;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +8,7 @@ import java.util.Objects;
 /**
  * 
  */
-public class PokemonCreature  implements java.io.Serializable  {
+public class PokemonCreature  implements Serializable {
 
     private final PokemonDescriptor descriptor;
     private final ArrayList<Capacity> capacities;

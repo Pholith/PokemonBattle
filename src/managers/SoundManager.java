@@ -7,7 +7,7 @@ public class SoundManager {
     SoundManager() {
         bip = new AudioClip(getClass().getResource("/resources/sounds/bip.wav").toExternalForm());
         fightMusic = new AudioClip(getClass().getResource("/resources/sounds/PokemonTrainer.wav").toExternalForm());
-        victorySound = new AudioClip(getClass().getResource("/resources/sounds/VictoryMusic.wav").toExternalForm());
+        victoryMusic = new AudioClip(getClass().getResource("/resources/sounds/VictoryMusic.wav").toExternalForm());
     }
     private final AudioClip bip;
 
@@ -21,10 +21,10 @@ public class SoundManager {
         bip.play();
     }
 
-    public AudioClip getVictorySound() {
-        return victorySound;
+    public AudioClip getVictoryMusic() {
+        return victoryMusic;
     }
 
-    private final AudioClip victorySound;
+    private final AudioClip victoryMusic;
 
 }

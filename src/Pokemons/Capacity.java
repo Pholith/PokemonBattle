@@ -1,9 +1,11 @@
 package Pokemons;
 
+import java.io.Serializable;
+
 /**
  *
  */
-public class Capacity {
+public class Capacity implements Serializable {
 
     /** Represent a Pokemon Capacity
      *

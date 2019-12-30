@@ -47,7 +47,7 @@ public class PokemonDescriptor  implements java.io.Serializable {
     public float getWeight() {
         return weight;
     }
-    public List<PokemonType> getTypes() {
+    public ArrayList<PokemonType> getTypes() {
         return types;
     }
 

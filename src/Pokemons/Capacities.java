@@ -4,16 +4,13 @@ import utils.Collections;
 import utils.InvalidFormatException;
 import utils.Strings;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 /**
  * 
  */
-public class Capacities {
+public class Capacities implements Serializable {
 
     /**
      * Default constructor
@@ -24,20 +21,20 @@ public class Capacities {
 
     private ArrayList<Capacity> capacities;
     private HashMap<Integer, Capacity> capacitiesMap;
-    private HashMap<PokemonType, List<Capacity>> capacitiesMapByType;
+    private HashMap<PokemonType, ArrayList<Capacity>> capacitiesMapByType;
 
     public Capacity getRandomCapacity(PokemonType type) {
         return Collections.getRandom(getCapacities(type));
     }
-    public List<Capacity> getRandomCapacities(PokemonType type, int amount) {
+    public ArrayList<Capacity> getRandomCapacities(PokemonType type, int amount) {
         return Collections.getRandoms(getCapacities(type), amount);
     }
     /**
      * Return a list of capacities
      * @return List containing all the capacities
      */
-    public List<Capacity> getCapacities() { return capacities; }
-    public List<Capacity> getCapacities(PokemonType type) {
+    public ArrayList<Capacity> getCapacities() { return capacities; }
+    public ArrayList<Capacity> getCapacities(PokemonType type) {
         return capacitiesMapByType.get(type);
     }
     /**

@@ -61,10 +61,10 @@ public class TextPopupArea {
             st.play();
             nextText();
 
-            TranslateTransition tr = new TranslateTransition(Duration.millis(100), circle_nextText);
+            TranslateTransition tr = new TranslateTransition(Duration.millis(200), circle_nextText);
 
-            tr.setFromY(0);
-            tr.setToY(20);
+            tr.setFromY(-20);
+            tr.setToY(0);
             tr.setCycleCount (Timeline.INDEFINITE);
             tr.setAutoReverse(true);
             tr.play();

@@ -2,7 +2,7 @@ package Pokemons;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class PokemonDescriptorBean {
+public class PokemonDescriptorBean  {
     private SimpleStringProperty name;
     private SimpleStringProperty types;
 

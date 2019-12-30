@@ -3,12 +3,12 @@ package base;
 import Pokemons.PokemonCreature;
 import managers.GameManager;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayerBot extends Player{
 
-    public PlayerBot(List<PokemonCreature> pokemons, String name) {
+    public PlayerBot(ArrayList<PokemonCreature> pokemons, String name) {
         super(pokemons, name);
     }
 
@@ -20,16 +20,41 @@ public class PlayerBot extends Player{
     @Override
     public void onPlayTurn() {
 
-        var capacity = getCurrentPokemon().getCapacities();
-        var pokemons = getPokemons();
+
+        boolean turnPassed = false;
+
+        while (!turnPassed) {
 
 
-        if (new Random().nextFloat() < 0.8d) {
-            GameManager.getBattleEvent().playerTurnCapacity(capacity.get(new Random().nextInt(capacity.size())));
-    }else{
-            GameManager.getBattleEvent().playerTurnSwitchPokemon(pokemons.get(new Random().nextInt(pokemons.size())));
+            if (new Random().nextFloat() < 0.8d) {//80% de chance
+                turnPassed = UseCapacity();
+            } else {
+                ChangePokemon();
+            }
         }
     }
+
+
+    boolean UseCapacity(){
+        var capacity = getSelectedPokemon().getCapacities();
+        GameManager.getBattleEvent().playerTurnCapacity(capacity.get(new Random().nextInt(capacity.size())));
+        return true;
+    }
+
+
+    boolean ChangePokemon() {
+        var pokemons = getPokemons();
+        var newPokemon = pokemons.get(new Random().nextInt(pokemons.size()));
+
+        if (newPokemon.IsDead() || newPokemon == getSelectedPokemon())
+            return false;
+
+        GameManager.getBattleEvent().playerTurnSwitchPokemon(newPokemon);
+
+
+        return true;
+    }
+
 
 
 }

@@ -1,6 +1,8 @@
 package Pokemons;
 
-class BaseStat {
+import java.io.Serializable;
+
+class BaseStat implements Serializable {
     private final int id;
     private final String name;
     private final int hp;

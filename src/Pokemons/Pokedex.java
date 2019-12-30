@@ -34,8 +34,8 @@ public class Pokedex {
     private static HashMap<String, PokemonDescriptor> pokemonMapName;
     private static HashMap<Integer, PokemonDescriptor> pokemonMapId;
 
-    public List<PokemonCreature> getRandomTeam(int numberOfPokemons) {
-        List<PokemonCreature> team = new ArrayList<>();
+    public ArrayList<PokemonCreature> getRandomTeam(int numberOfPokemons) {
+        ArrayList<PokemonCreature> team = new ArrayList<>();
         for (int i = 0; i < numberOfPokemons; i++) {
             PokemonDescriptor desc = getRandomDescriptor();
             team.add(new PokemonCreature(

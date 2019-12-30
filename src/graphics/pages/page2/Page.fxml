@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576" prefWidth="1024" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.pages.page2.Page2Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576" prefWidth="1024" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.pages.page2.Page2Controller">
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -16,11 +18,11 @@
                <font>
                   <Font size="18.0" />
                </font></Button>
-            <Button fx:id="but_pokedex" mnemonicParsing="false" onAction="#but_pokedex_action" prefHeight="45.0" prefWidth="229.0" text="Build your team !">
+            <Button fx:id="but_pokedex" mnemonicParsing="false" onAction="#but_pokedex_action" prefHeight="63.0" prefWidth="230.0" text="Build your team !">
                <font>
                   <Font size="15.0" />
                </font></Button>
-            <Button fx:id="but_inventory" mnemonicParsing="false" onAction="#but_inventory_action" prefHeight="25.0" prefWidth="182.0" text="inventory??">
+            <Button fx:id="but_inventory" mnemonicParsing="false" onAction="#but_inventory_action" prefHeight="63.0" prefWidth="230.0" text="Load a save !">
                <font>
                   <Font size="15.0" />
                </font></Button>

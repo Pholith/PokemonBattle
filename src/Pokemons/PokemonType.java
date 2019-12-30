@@ -1,9 +1,11 @@
 package Pokemons;
 
+import java.io.Serializable;
+
 /**
  * 
  */
-public class PokemonType implements Comparable<PokemonType> {
+public class PokemonType implements Comparable<PokemonType>, Serializable {
 
     PokemonType(String name) {
         this.name = name;

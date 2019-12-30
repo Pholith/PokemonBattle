@@ -58,6 +58,11 @@ public class GameManager  {
         pageManager.switchPage("page2");
     }
 
+    public void startFightSave(BattleEvent battle) {
+        battleEvent = battle;
+        battleEvent.onSaveLoaded();
+    }
+
 
     public void startFight(){
 
@@ -69,13 +74,13 @@ public class GameManager  {
         battleEvent = new BattleEvent();
         var p1 = new Player(team, "Joueur 1");
         var p2 = new PlayerBot(pokedex.getRandomTeam(team.size()), "L'ordinateur");
-        soundManager.getFightMusic().play();
 
         battleEvent.startFight(p1, p2);
     }
     public void finishFight() {
         battleEvent = null;
-        soundManager.getVictorySound().stop();
+        soundManager.getVictoryMusic().stop();
+        soundManager.getFightMusic().stop();
         switchPage("mainPage");
     }
 

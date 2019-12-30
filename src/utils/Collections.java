@@ -16,8 +16,8 @@ public class Collections {
     }
 
 
-    public static <T> List<T> getRandoms(List<T> lst, int amount) {
-        List<T> resultLst = new ArrayList<>();
+    public static <T> ArrayList<T> getRandoms(List<T> lst, int amount) {
+        ArrayList<T> resultLst = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             resultLst.add(getRandom(lst));
         }

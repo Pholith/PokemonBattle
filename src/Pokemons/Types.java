@@ -2,23 +2,20 @@ package Pokemons;
 
 import utils.Strings;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-public class Types {
 
-    private static List<PokemonType> typesList;
+public class Types implements Serializable {
+
+    private static ArrayList<PokemonType> typesList;
     private static HashMap<String, PokemonType> typesMap;
     /**
      * Lazy getter of types
      * @return List containing all the types
      */
-    public static List<PokemonType> getTypesList() {
+    public static ArrayList<PokemonType> getTypesList() {
         if (typesList == null) buildTypes();
         return typesList;
     }

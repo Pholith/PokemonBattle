@@ -2,13 +2,14 @@ package base;
 
 import Pokemons.Capacity;
 import Pokemons.PokemonCreature;
-import Pokemons.PokemonDescriptor;
 import javafx.scene.control.ListView;
 
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Player {
+
+public class Player implements Serializable {
 
 
     private final String name;
@@ -17,26 +18,32 @@ public class Player {
         return name;
     }
 
-    private final List<PokemonCreature> pokemons;
-    private PokemonCreature selectedPokemon;
+    private final ArrayList<PokemonCreature> pokemons;
+    private int selectedPokemon;
 
-    public Player(List<PokemonCreature> pokemons, String playerName) {
-        this.pokemons = pokemons;
+
+    public Player(ArrayList<PokemonCreature> pokemons, String playerName) {
+        this.pokemons = new ArrayList<>();
+        this.pokemons.addAll(pokemons);
         this.name = playerName;
-        this.selectedPokemon = pokemons.get(0);
+        this.selectedPokemon = 0;
     }
 
-    protected List<PokemonCreature> getPokemons(){return pokemons;}
+
+    protected ArrayList<PokemonCreature> getPokemons(){return pokemons;}
 
 
     public void setSelectedPokemonId(PokemonCreature pok) {
-        selectedPokemon = pok;
+        selectedPokemon =   pokemons.indexOf(pok);
     }
 
 
 
-    public PokemonCreature getCurrentPokemon() {
-        return selectedPokemon;
+
+    public PokemonCreature getSelectedPokemon() {
+        if(selectedPokemon == -1)
+            return null;
+        return pokemons.get(selectedPokemon);
     }
     public PokemonCreature getFirstPokemonAlive() {
 
@@ -55,7 +62,8 @@ public class Player {
 
     public void fillUiList(ListView<Capacity> list_capacity, ListView<PokemonCreature> list_swichPokemon) {
 
-        var atckList = selectedPokemon.getCapacities();
+        var pok =  getSelectedPokemon();
+        var atckList = pok.getCapacities();
 
 
         list_capacity.getItems().clear();
@@ -66,7 +74,7 @@ public class Player {
 
         list_swichPokemon.getItems().clear();
         for (var act : pokemons) {
-            if (act != selectedPokemon)
+            if (act != pok)
                 list_swichPokemon.getItems().add(act);
         }
     }
