@@ -81,7 +81,9 @@ public class Capacity implements Serializable {
         bld.append(power);
         bld.append(", ");
         bld.append(damageClass.toString());
-        bld.append(" damages");
+        bld.append(", ");
+        bld.append("%:");
+        bld.append(accuracy);
 
         return bld.toString();
     }

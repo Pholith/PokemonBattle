@@ -72,14 +72,22 @@ public class PokemonCreature  implements Serializable {
         speed = stat.getSpeed();
     }
 
-    public void receiveAttack(Capacity atk){
-        hp -= atk.getPower();//??? a voir
+    public void receiveDamage(int damage) {
+        hp -= damage;
         if(hp <= 0){
             isDead = true;
             hp = 0;
         }
     }
-
+    // Reset stats of a pokemon after a fight
+    public void reset() {
+        hp = baseStat.getHp();
+        attack = baseStat.getAttack();
+        defense = baseStat.getDefense();
+        specialAttack = baseStat.getSpecialAttack();
+        specialDefense = baseStat.getSpecialDefense();
+        speed = baseStat.getSpeed();
+    }
 
     @Override
     public String toString() {

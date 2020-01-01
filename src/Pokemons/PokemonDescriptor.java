@@ -19,7 +19,7 @@ public class PokemonDescriptor  implements java.io.Serializable {
         this.image = image;
         this.height = height;
         this.weight = weight;
-        this.types = new ArrayList<PokemonType>();
+        this.types = new HashSet<PokemonType>();
         for (PokemonType type: types ) {
             if (type != null && !type.toString().equals("")) this.types.add(type);
         }
@@ -30,7 +30,7 @@ public class PokemonDescriptor  implements java.io.Serializable {
     private String image;
     private float height;
     private float weight;
-    private ArrayList<PokemonType> types;
+    private HashSet<PokemonType> types;
 
     public int getID() {
         return ID;
@@ -47,13 +47,12 @@ public class PokemonDescriptor  implements java.io.Serializable {
     public float getWeight() {
         return weight;
     }
-    public ArrayList<PokemonType> getTypes() {
+    public HashSet<PokemonType> getTypes() {
         return types;
     }
 
     public String typesToString() {
         final StringBuilder sb = new StringBuilder();
-        types.sort(null);
         for (PokemonType type : types) {
             sb.append(type.toString()).append(" ");
         }

@@ -23,7 +23,7 @@ public class BattleEvent  implements Serializable {
     private Player[] players;
     private int currentPlayerTurn = -1;
     transient private PageFightController pageController;
-
+    private DamageManager damageManager;
 
 
 
@@ -45,6 +45,7 @@ public class BattleEvent  implements Serializable {
 //package
     void startFight(Player player1, Player player2) {
         players = new Player[]{player1, player2};
+        if (damageManager == null) damageManager = new DamageManager();
 
         if(players[1].getSelectedPokemon().getSpeed() > players[0].getSelectedPokemon().getSpeed())
             currentPlayerTurn = 0;
@@ -106,24 +107,19 @@ public class BattleEvent  implements Serializable {
 
     public void playerTurnCapacity(Capacity atk) {
         pageController.setGameButtonsVisibility(false);
+        var allyPok = players[(currentPlayerTurn) % 2].getSelectedPokemon();
         var ennemyPok = players[(currentPlayerTurn + 1) % 2].getSelectedPokemon();
         var lostPv = ennemyPok.getHp();
-        ennemyPok.receiveAttack(atk);
+        String efficiency = damageManager.applyCapacity(atk, allyPok, ennemyPok);
         lostPv = lostPv - ennemyPok.getHp();
 
         var ratio = (float) lostPv / (float) ennemyPok.getStartHp();
         UpdatePokemonUi();
-        new TextPopupArea(() -> endTurnAction(), players[currentPlayerTurn].getName() + " utilise " + atk.getName(), ratioToText(ratio) + "\nL'ennemi à perdu " + lostPv + " Pvs.");
-    }
-
-    private String ratioToText(float ratio) {
-        if (ratio < 0.1f)
-            return "Ce n'est pas trés efficace.";
-        if (ratio < 0.3f)
-            return "Legers dégats.";
-        if (ratio < 0.6f)
-            return "Attaque efficace !";
-        return "Attaque destructrice !";
+        if (efficiency.equals(DamageManager.EFFECTIVITY.NONE)) {
+            new TextPopupArea(() -> endTurnAction(), players[currentPlayerTurn].getName() + " utilise " + atk.getName());
+            return;
+        }
+        new TextPopupArea(() -> endTurnAction(), players[currentPlayerTurn].getName() + " utilise " + atk.getName(),  efficiency + "L'ennemi à perdu " + lostPv + " Pvs.");
     }
 
     public void playerTurnSwitchPokemon(PokemonCreature newPokemon ) {
@@ -147,7 +143,7 @@ public class BattleEvent  implements Serializable {
     private void endTurnAction() {
 
         var nextPlayer = players[(currentPlayerTurn+1)%2];
-var pok = nextPlayer.getSelectedPokemon();
+        var pok = nextPlayer.getSelectedPokemon();
 
         if(pok == null){
             endFight();

@@ -1,6 +1,8 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class Collections {
@@ -14,7 +16,10 @@ public class Collections {
     public static <T> T getRandom(List<T> lst) {
         return lst.get((int) (Math.random() * lst.size()));
     }
-
+    public static <T> T getRandom(HashSet<T> lst) {
+        var array = Arrays.asList(lst.toArray());
+        return (T) array.get((int) (Math.random() * lst.size()));
+    }
 
     public static <T> ArrayList<T> getRandoms(List<T> lst, int amount) {
         ArrayList<T> resultLst = new ArrayList<>();
