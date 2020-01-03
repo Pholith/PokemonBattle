@@ -17,10 +17,14 @@ public class Pokedex {
     /**
      * Default constructor
      */
-    public Pokedex() {
+    public Pokedex(Stats stats, Capacities capacities) {
         buildPokemons();
+        this.stats = stats;
+        this.capacities = capacities;
     }
 
+    private Stats stats;
+    private Capacities capacities;
     public ArrayList<PokemonDescriptor> getPokemons() {
         return pokemons;
     }
@@ -40,8 +44,8 @@ public class Pokedex {
             PokemonDescriptor desc = getRandomDescriptor();
             team.add(new PokemonCreature(
                     desc,
-                    GameManager.GetInstance().getStats().getBaseStat(desc.getID()),
-                    GameManager.GetInstance().getCapacities().getRandomCapacities(Collections.getRandom(desc.getTypes()), 4)));
+                    stats.getBaseStat(desc.getID()),
+                    capacities.getRandomCapacities(Collections.getRandom(desc.getTypes()), 4)));
         }
         return team;
     }

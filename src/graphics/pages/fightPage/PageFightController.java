@@ -26,14 +26,44 @@ import utils.ISetStage;
 
 public class PageFightController implements IController, ISetStage {
 
-
+    @FXML
+    private ImageView img_pok1;
+    @FXML
+    private ImageView imageBackground;
+    @FXML
+    private ImageView img_pok2;
+    @FXML
+    private ProgressBar bar1;
+    @FXML
+    private ProgressBar bar2;
+    @FXML
+    private Label bar1_txt;
+    @FXML
+    private Label bar2_txt;
+    @FXML
+    private HBox hbox_action;
+    @FXML
+    private ImageView but_capacity;
+    @FXML
+    private ImageView but_switchPokemon;
+    @FXML
+    private ImageView but_options;
+    @FXML
+    private ListView<Capacity> list_capacity;
+    @FXML
+    private ListView<PokemonCreature> list_swichPokemon;
+    @FXML
+    private AnchorPane panel_settings;
+    @FXML
+    private Button but_settings_back;
+    @FXML
+    private Button but_settings_save;
+    @FXML
+    private Button but_settings_mainMenu;
 
     public void updateLists(Player player) {
 player.fillUiList(list_capacity, list_swichPokemon);
     }
-
-
-
 
     public void setGameButtonsVisibility(boolean val){
 
@@ -56,7 +86,6 @@ player.fillUiList(list_capacity, list_swichPokemon);
         list_swichPokemon.setVisible(false);
         list_swichPokemon.getSelectionModel().setSelectionMode(null);
     }
-
 
     public void setPlayerImage(Image img, int idPlayer){
       if((idPlayer%2)==0)
@@ -100,7 +129,6 @@ player.fillUiList(list_capacity, list_swichPokemon);
     }
 
 
-
     private void initListViews(){
         list_capacity.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -118,54 +146,6 @@ player.fillUiList(list_capacity, list_swichPokemon);
             }
         });
     }
-
-
-    @FXML
-    private ImageView img_pok1;
-    @FXML
-    private ImageView imageBackground;
-    @FXML
-    private ImageView img_pok2;
-    @FXML
-    private ProgressBar bar1;
-    @FXML
-    private ProgressBar bar2;
-    @FXML
-    private Label bar1_txt;
-    @FXML
-    private Label bar2_txt;
-    @FXML
-    private HBox hbox_action;
-    @FXML
-    private ImageView but_capacity;
-
-    @FXML
-    private ImageView but_switchPokemon;
-
-    @FXML
-    private ImageView but_options;
-
-
-    @FXML
-    private ListView<Capacity> list_capacity;
-
-    @FXML
-    private ListView<PokemonCreature> list_swichPokemon;
-
-
-    @FXML
-    private AnchorPane panel_settings;
-
-    @FXML
-    private Button but_settings_back;
-
-    @FXML
-    private Button but_settings_save;
-
-    @FXML
-    private Button but_settings_mainMenu;
-
-
 
 
     private void onPressImageButton(ListView<?> linkedList){
@@ -222,8 +202,6 @@ player.fillUiList(list_capacity, list_swichPokemon);
         onReleaseImageButton(but_capacity);
     }
 
-
-
     @FXML
     void onClickChangePokemon(MouseEvent event) {
         onPressImageButton(list_swichPokemon);
@@ -239,15 +217,11 @@ player.fillUiList(list_capacity, list_swichPokemon);
         onDragImageButton (but_switchPokemon);
     }
 
-
-
-
     @FXML
     void onClickOptions(MouseEvent event) {
-panel_settings.setVisible(true);
+        panel_settings.setVisible(true);
         GameManager.getSoundManager().playBip();
     }
-
 
     @FXML
     void onOptionsDrag(MouseEvent event) {
@@ -258,8 +232,6 @@ panel_settings.setVisible(true);
     void onOptionsRelease(MouseEvent event) {
         onReleaseImageButton(but_options);
     }
-
-
 
     @FXML
     void onExitFight(ActionEvent event) {

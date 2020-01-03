@@ -11,11 +11,11 @@ public class Main {
 
         System.out.println(Types.getTypesList());
 
-        Pokedex poke = new Pokedex();
+        /*Pokedex poke = new Pokedex();
 
         for (PokemonDescriptor descriptor : poke.getPokemons()) {
             System.out.println(descriptor);
-        }
+        }*/
 
         Capacities capacities = new Capacities();
         for (Capacity capacity : capacities.getCapacities()) {

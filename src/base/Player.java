@@ -30,14 +30,11 @@ public class Player implements Serializable {
     }
 
 
-    protected ArrayList<PokemonCreature> getPokemons(){return pokemons;}
-
+    public ArrayList<PokemonCreature> getPokemons() {return pokemons;}
 
     public void setSelectedPokemonId(PokemonCreature pok) {
         selectedPokemon =   pokemons.indexOf(pok);
     }
-
-
 
 
     public PokemonCreature getSelectedPokemon() {
@@ -55,11 +52,9 @@ public class Player implements Serializable {
         return null;
     }
 
-
     public boolean isAutomaticPlayer(){
         return false;
     }
-
     public void fillUiList(ListView<Capacity> list_capacity, ListView<PokemonCreature> list_swichPokemon) {
 
         var pok =  getSelectedPokemon();
@@ -70,17 +65,19 @@ public class Player implements Serializable {
         for (var act : atckList)
             list_capacity.getItems().add(act);
 
-
-
         list_swichPokemon.getItems().clear();
         for (var act : pokemons) {
             if (act != pok)
                 list_swichPokemon.getItems().add(act);
         }
     }
-
-
+    public void resetPokemons() {
+        for (PokemonCreature p: pokemons) {
+            p.reset();
+        }
+    }
     public void onPlayTurn() {
     }
-
+    public void defeat() {
+    }
 }

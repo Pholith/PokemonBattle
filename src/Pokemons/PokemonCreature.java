@@ -74,6 +74,9 @@ public class PokemonCreature  implements Serializable {
 
     public void receiveDamage(int damage) {
         hp -= damage;
+        if (hp > baseStat.getHp()) {
+            hp = baseStat.getHp();
+        }
         if(hp <= 0){
             isDead = true;
             hp = 0;
@@ -81,6 +84,7 @@ public class PokemonCreature  implements Serializable {
     }
     // Reset stats of a pokemon after a fight
     public void reset() {
+        isDead = false;
         hp = baseStat.getHp();
         attack = baseStat.getAttack();
         defense = baseStat.getDefense();

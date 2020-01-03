@@ -91,6 +91,7 @@ public class CapacityBuilderController implements Initializable {
             capacityList.addAll(GameManager.GetInstance().getCapacities().getCapacities(type));
         }
         allCapacityListUi.setItems(FXCollections.observableList(capacityList));
+        allCapacityListUi.getItems().sort(null);
 
         // Set the image
         try {

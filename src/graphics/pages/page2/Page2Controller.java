@@ -9,6 +9,7 @@ import managers.GameManager;
 
 public class Page2Controller implements IController {
 
+
     @FXML
     private Button but_inventory;
 
@@ -25,7 +26,7 @@ public class Page2Controller implements IController {
 
     @FXML
     void but_inventory_action(ActionEvent event) {
-            GameManager.GetInstance().switchPage("loadSave");
+        GameManager.GetInstance().switchPage("loadSave");
     }
 
     @FXML
@@ -33,5 +34,8 @@ public class Page2Controller implements IController {
         GameManager.GetInstance().switchPage("TeamBuilder");
     }
 
-
+    @FXML
+    void but_ligues_action(ActionEvent event) {
+        GameManager.GetInstance().switchPage("ligue");
+    }
 }

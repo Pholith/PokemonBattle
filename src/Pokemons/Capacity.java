@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  *
  */
-public class Capacity implements Serializable {
+public class Capacity implements Serializable, Comparable<Capacity> {
 
     /** Represent a Pokemon Capacity
      *
@@ -76,7 +76,9 @@ public class Capacity implements Serializable {
     public String toString() {
         StringBuilder bld = new StringBuilder();
         bld.append(name);
-        bld.append("\n");
+        bld.append(" (");
+        bld.append(type.toString());
+        bld.append(")\n");
         bld.append("Power:");
         bld.append(power);
         bld.append(", ");
@@ -88,6 +90,8 @@ public class Capacity implements Serializable {
         return bld.toString();
     }
 
-
-
+    @Override
+    public int compareTo(Capacity o) {
+        return Integer.compare(o.power, this.power);
+    }
 }

@@ -34,13 +34,11 @@ public class PlayerBot extends Player{
         }
     }
 
-
     boolean UseCapacity(){
         var capacity = getSelectedPokemon().getCapacities();
         GameManager.getBattleEvent().playerTurnCapacity(capacity.get(new Random().nextInt(capacity.size())));
         return true;
     }
-
 
     boolean ChangePokemon() {
         var pokemons = getPokemons();
@@ -50,11 +48,6 @@ public class PlayerBot extends Player{
             return false;
 
         GameManager.getBattleEvent().playerTurnSwitchPokemon(newPokemon);
-
-
         return true;
     }
-
-
-
 }

@@ -1,10 +1,7 @@
 package managers;
 
 
-import Pokemons.Capacities;
-import Pokemons.Pokedex;
-import Pokemons.PokemonCreature;
-import Pokemons.Stats;
+import Pokemons.*;
 import base.Player;
 import base.PlayerBot;
 import graphics.utilities.dialogArea.TextPopupArea;
@@ -23,9 +20,10 @@ public class GameManager  {
         super();
         team = new ArrayList<>();
         capacities = new Capacities();
-        pokedex = new Pokedex();
         stats = new Stats();
         soundManager = new SoundManager();
+        pokedex = new Pokedex(stats, capacities);
+        ligue = new Ligue();
     }
 
     private SoundManager soundManager;
@@ -63,25 +61,32 @@ public class GameManager  {
         battleEvent.onSaveLoaded();
     }
 
-
-    public void startFight(){
+    public void startFight(Player p1, Player p2) {
 
         if(team == null || team.size() == 0){
             new TextPopupArea("You can't start a battle without a team.");
             return;
         }
-
         battleEvent = new BattleEvent();
-        var p1 = new Player(team, "Joueur 1");
-        var p2 = new PlayerBot(pokedex.getRandomTeam(team.size()), "L'ordinateur");
+        if (p1 == null) p1 = new Player(team, "Joueur 1");
+        if (p2 == null) p2 = new PlayerBot(pokedex.getRandomTeam(team.size()), "L'ordinateur");
 
         battleEvent.startFight(p1, p2);
     }
+    public void startFight(){
+        startFight(null,null);
+    }
+
     public void finishFight() {
+        for (PokemonCreature poke: team) {
+            poke.reset();
+        }
         battleEvent = null;
         soundManager.getVictoryMusic().stop();
         soundManager.getFightMusic().stop();
         switchPage("mainPage");
+
+        if (getLigue().isDefeated()) new TextPopupArea("Félicitation ! Vous avez vaincu la ligue pokemon !");
     }
 
 
@@ -104,6 +109,7 @@ public class GameManager  {
     private final Pokedex pokedex;
     private final Capacities capacities;
     private final Stats stats;
+    private final Ligue ligue;
 
     public Pokedex getPokedex() {
         return pokedex;
@@ -113,6 +119,10 @@ public class GameManager  {
     }
     public Stats getStats() {
         return stats;
+    }
+    public Ligue getLigue() {
+        ligue.initialize();
+        return ligue;
     }
 
 

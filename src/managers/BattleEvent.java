@@ -14,18 +14,13 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-//Serialisable
 public class BattleEvent  implements Serializable {
-
-
 
 
     private Player[] players;
     private int currentPlayerTurn = -1;
     transient private PageFightController pageController;
     private DamageManager damageManager;
-
-
 
 
     private void updatePokemonImage(int playerId) {
@@ -44,14 +39,13 @@ public class BattleEvent  implements Serializable {
 
 //package
     void startFight(Player player1, Player player2) {
-        players = new Player[]{player1, player2};
+        players = new Player[] {player1, player2};
         if (damageManager == null) damageManager = new DamageManager();
 
         if(players[1].getSelectedPokemon().getSpeed() > players[0].getSelectedPokemon().getSpeed())
             currentPlayerTurn = 0;
         else
             currentPlayerTurn = 1;
-
 
 
         GameManager.GetInstance().switchPage("fightPage");
@@ -64,20 +58,19 @@ public class BattleEvent  implements Serializable {
     }
 
 
-
     public void fightInitCallback(PageFightController currentController) {
         this.pageController = currentController;
         UpdatePokemonUi();
 
         GameManager.getSoundManager().getFightMusic().play();
 
-        new TextPopupArea(() -> nextTurn(), "Début du combat !");
+        new TextPopupArea(this::nextTurn, "Début du combat !");
     }
 
 
     private void nextTurn() {
         currentPlayerTurn = (currentPlayerTurn + 1) % 2;
-        new TextPopupArea(() -> timeToPlay(), "Au tour de " + players[currentPlayerTurn].getName());
+        new TextPopupArea(this::timeToPlay, "Au tour de " + players[currentPlayerTurn].getName());
     }
 
 
@@ -93,7 +86,7 @@ public class BattleEvent  implements Serializable {
 
     private void UpdatePokemonUi(){
 
-        System.out.println(currentPlayerTurn);
+        //System.out.println(currentPlayerTurn);
         var pok = players[0].getSelectedPokemon();
         if(pok != null)
         pageController.setPlayerHp(pok.getHp(), pok.getStartHp(), 0);
@@ -116,29 +109,28 @@ public class BattleEvent  implements Serializable {
         var ratio = (float) lostPv / (float) ennemyPok.getStartHp();
         UpdatePokemonUi();
         if (efficiency.equals(DamageManager.EFFECTIVITY.NONE)) {
-            new TextPopupArea(() -> endTurnAction(), players[currentPlayerTurn].getName() + " utilise " + atk.getName());
+            new TextPopupArea(this::endTurnAction, players[currentPlayerTurn].getName() + " utilise " + atk.getName());
             return;
         }
-        new TextPopupArea(() -> endTurnAction(), players[currentPlayerTurn].getName() + " utilise " + atk.getName(),  efficiency + "L'ennemi à perdu " + lostPv + " Pvs.");
+        new TextPopupArea(this::endTurnAction, players[currentPlayerTurn].getName() + " utilise " + atk.getName(),  efficiency + "L'ennemi à perdu " + lostPv + " Pvs.");
     }
 
     public void playerTurnSwitchPokemon(PokemonCreature newPokemon ) {
         playerTurnSwitchPokemon(newPokemon, players[currentPlayerTurn]);
     }
 
-    public void playerTurnSwitchPokemon(PokemonCreature newPokemon, Player currentPlayer) {
+    private void playerTurnSwitchPokemon(PokemonCreature newPokemon, Player currentPlayer) {
         pageController.setGameButtonsVisibility(false);
         currentPlayer.setSelectedPokemonId(newPokemon);
 
         UpdatePokemonUi();
 
         if(newPokemon != null)
-        new TextPopupArea(() -> endTurnAction(), currentPlayer.getName() + " range son pokemon et laisse place a " + newPokemon.getDescriptor().getName());
+        new TextPopupArea(this::endTurnAction, currentPlayer.getName() + " range son pokemon et laisse place a " + newPokemon.getDescriptor().getName());
         else{
             endTurnAction();
         }
     }
-
 
     private void endTurnAction() {
 
@@ -164,23 +156,22 @@ public class BattleEvent  implements Serializable {
 
     private void endFight() {
         Player winner = players[0];
+        players[1].defeat();
+        players[0].resetPokemons();
+        players[1].resetPokemons();
+
         GameManager.getSoundManager().getFightMusic().stop();
         GameManager.getSoundManager().getVictoryMusic().play();
 
         if(players[0].getSelectedPokemon() == null)
             winner = players[1];
-
-        new TextPopupArea(()->{
-            GameManager.GetInstance().finishFight();},  winner.getName() + " remporte le duel !");
+        new TextPopupArea(()-> GameManager.GetInstance().finishFight(),  winner.getName() + " remporte le duel !");
 
     }
-
-
 
     public void SaveGame(){
 
         String fileName = "Fight_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss'.txt'").format(new Date());
-
 
         try
         {
@@ -195,7 +186,6 @@ public class BattleEvent  implements Serializable {
             file.close();
 
 
-
             System.out.println("Object has been serialized");
             new TextPopupArea("Game save as " + fileName);
 
@@ -204,11 +194,6 @@ public class BattleEvent  implements Serializable {
         {
             ex.printStackTrace();
             new TextPopupArea("Error during the save of " + fileName);
-
         }
-
-
     }
-
-
 }

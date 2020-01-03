@@ -6,10 +6,8 @@ import utils.Strings;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Objects;
 
 public class DamageManager {
 
@@ -17,12 +15,12 @@ public class DamageManager {
         buildGrid();
     }
 
-    public static class EFFECTIVITY {
-        public static final String NONE = "";
-        public static final String FAIL = "L'attaque est loupée !\n";
-        public static final String NOT_EFFECTIVE = "Ce n'est pas très efficace.\n";
-        public static final String EFFECTIVE = "";
-        public static final String SUPER_EFFECTIVE = "C'est super efficace !\n";
+    static class EFFECTIVITY {
+        static final String NONE = "";
+        static final String FAIL = "L'attaque est loupée !\n";
+        static final String NOT_EFFECTIVE = "Ce n'est pas très efficace.\n";
+        static final String EFFECTIVE = "";
+        static final String SUPER_EFFECTIVE = "C'est super efficace !\n";
     }
 
     public HashMap<AttackAndTargetTypes, Double> getGrid_type() {
@@ -36,16 +34,17 @@ public class DamageManager {
      * @param capacity the capacity used
      * @param user the pokemon who uses the capacity
      * @param target the enemy pokemon
-     * @return return the effectivity of the atatck
+     * @return return the effectivity of the attack
      */
-    public String applyCapacity(Capacity capacity, PokemonCreature user, PokemonCreature target) {
+    String applyCapacity(Capacity capacity, PokemonCreature user, PokemonCreature target) {
 
         if (capacity.getDamageClass() == DamageClass.statut) {
+            user.receiveDamage(-(capacity.getPower()/2));
             return EFFECTIVITY.NONE;
         }
         int defense;
         int attack;
-        int level = 50;
+        int level = 10;
         if (capacity.getDamageClass() == DamageClass.physical) {
             defense = target.getDefense();
             attack = user.getAttack();
@@ -60,14 +59,18 @@ public class DamageManager {
         assert capacity.getType() != null;
         assert target.getDescriptor() != null;
         assert target.getDescriptor().getTypes() != null;
+
         AttackAndTargetTypes key = new AttackAndTargetTypes(capacity.getType(), target.getDescriptor().getTypes());
-        Double rawMultiplier = grid_type.get(key);
-        System.out.println(key);
-        assert rawMultiplier != null;
-        double multiplier = rawMultiplier;
+        double multiplier;
+        try {
+            multiplier = grid_type.get(key);
+        } catch (NullPointerException e) {
+            System.err.println("KEY " + key + "NOT FOUND");
+            multiplier = 1;
+        }
 
         // damage calcul https://www.pokepedia.fr/Calcul_des_d%C3%A9g%C3%A2ts
-        int damage = (int) ((((level * 0.4 + 2)*capacity.getPower()* attack ) / ( defense * 50 ) + 2 ) * multiplier);
+        int damage = (int) ((((level * 0.4 + 2) * capacity.getPower()* attack ) / ( defense * 50 ) + 2 ) * multiplier);
         target.receiveDamage(damage);
 
         if (multiplier <= 0.5) return EFFECTIVITY.NOT_EFFECTIVE;
@@ -80,7 +83,7 @@ public class DamageManager {
 
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(Types.class.getResourceAsStream("/resources/grid_types.csv")))) {
             String currLine;
-            currLine = bufferedReader.readLine();
+            bufferedReader.readLine();
 
             while ((currLine = bufferedReader.readLine()) != null) {
                 String[] splitedLine = currLine.split(",");
