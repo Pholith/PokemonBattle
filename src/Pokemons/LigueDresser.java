@@ -18,7 +18,7 @@ public class LigueDresser extends PlayerBot {
     @Override
     public void defeat() {
         super.defeat();
-        System.out.println("defeat");
+        System.out.println(getName() + " defeated !!");
         defeated = true;
     }
     public boolean isDefeated() {
@@ -52,4 +52,6 @@ public class LigueDresser extends PlayerBot {
     public int hashCode() {
         return Objects.hash(defeated, level);
     }
+
+
 }

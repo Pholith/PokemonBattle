@@ -80,4 +80,14 @@ public class Player implements Serializable {
     }
     public void defeat() {
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Player{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", pokemons=").append(pokemons);
+        sb.append(", selectedPokemon=").append(selectedPokemon);
+        sb.append('}');
+        return sb.toString();
+    }
 }

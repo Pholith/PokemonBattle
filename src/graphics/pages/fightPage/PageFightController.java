@@ -236,7 +236,7 @@ player.fillUiList(list_capacity, list_swichPokemon);
     @FXML
     void onExitFight(ActionEvent event) {
         GameManager.getSoundManager().playBip();
-        GameManager.GetInstance().finishFight();
+        GameManager.getBattleEvent().exitFight();
     }
 
     @FXML

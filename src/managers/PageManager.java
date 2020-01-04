@@ -85,6 +85,7 @@ public class PageManager extends Application {
         @Override
         public void start(Stage primaryStage) throws Exception {
             currentPanel = FXMLLoader.load( Paths.get(Constants.pagesDir + "/mainPage/Page.fxml").toUri().toURL());
+            //currentPanel = FXMLLoader.load(getClass().getResource(Constants.pagesDir + "/mainPage/Page.fxml"));
             primaryStage.setTitle("Pokemon");
             main = new Scene(currentPanel);
             Font f = Font.loadFont(getClass().getResourceAsStream("/resources/fonts/Pokemon Classic.ttf"), 16);

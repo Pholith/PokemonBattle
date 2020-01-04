@@ -153,19 +153,26 @@ public class BattleEvent  implements Serializable {
         }
     }
 
-
+    public void exitFight() {
+        GameManager.GetInstance().finishFight(players);
+    }
     private void endFight() {
         Player winner = players[0];
-        players[1].defeat();
+        Player looser = players[1];
+        if(players[0].getSelectedPokemon() == null) {
+            winner = players[1];
+            looser = players[0];
+        }
+        System.out.println("Fight ended! Looser is: " + looser + " And winner is: " + winner);
+
+        looser.defeat();
         players[0].resetPokemons();
         players[1].resetPokemons();
 
         GameManager.getSoundManager().getFightMusic().stop();
         GameManager.getSoundManager().getVictoryMusic().play();
 
-        if(players[0].getSelectedPokemon() == null)
-            winner = players[1];
-        new TextPopupArea(()-> GameManager.GetInstance().finishFight(),  winner.getName() + " remporte le duel !");
+        new TextPopupArea(()-> GameManager.GetInstance().finishFight(players),  winner.getName() + " remporte le duel !");
 
     }
 

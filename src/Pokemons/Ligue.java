@@ -18,7 +18,8 @@ public class Ligue {
     public void initialize() {
         if (initialized) return;
         for (int i = 0; i < CONSTANTS.LIGUE_NBR; i++) {
-            ligueDresserList.add(new LigueDresser(GameManager.GetInstance().getPokedex().getRandomTeam(CONSTANTS.LIGUE_POK_NBR), i));
+            if (i == CONSTANTS.LIGUE_NBR - 1) ligueDresserList.add(new LigueDresser(GameManager.GetInstance().getPokedex().getRandomTeam(CONSTANTS.LIGUE_POK_NBR + 1), i+1));
+            else ligueDresserList.add(new LigueDresser(GameManager.GetInstance().getPokedex().getRandomTeam(CONSTANTS.LIGUE_POK_NBR), i+1));
         }
         initialized = true;
     }

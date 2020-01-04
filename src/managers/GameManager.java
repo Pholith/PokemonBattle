@@ -77,9 +77,9 @@ public class GameManager  {
         startFight(null,null);
     }
 
-    public void finishFight() {
-        for (PokemonCreature poke: team) {
-            poke.reset();
+    public void finishFight(Player[] players) {
+        for (Player player: players) {
+            player.resetPokemons();
         }
         battleEvent = null;
         soundManager.getVictoryMusic().stop();

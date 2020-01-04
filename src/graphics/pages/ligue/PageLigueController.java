@@ -51,7 +51,7 @@ public class PageLigueController implements Initializable {
                     @Override
                     protected void updateItem(LigueDresser item, boolean empty) {
                         super.updateItem(item, empty);
-                        setStyle(STYLE_FT_SIZE+"24;");
+                        setStyle(STYLE_FT_SIZE+"26;");
 
                         if (item == null || empty) {
                             setText(null);
