@@ -90,4 +90,9 @@ public class Player implements Serializable {
         sb.append('}');
         return sb.toString();
     }
+
+    public void updateCloneTeam(ArrayList<PokemonCreature> teamPlayer1) {
+        teamPlayer1.clear();
+        teamPlayer1.addAll(this.pokemons);
+    }
 }

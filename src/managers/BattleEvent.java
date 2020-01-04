@@ -4,6 +4,7 @@ package managers;
 import Pokemons.Capacity;
 import Pokemons.PokemonCreature;
 import base.Player;
+import base.PlayerBot;
 import graphics.pages.fightPage.PageFightController;
 import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.scene.image.Image;
@@ -16,11 +17,10 @@ import java.util.Date;
 
 public class BattleEvent  implements Serializable {
 
-
     private Player[] players;
     private int currentPlayerTurn = -1;
     transient private PageFightController pageController;
-    private DamageManager damageManager;
+    transient private DamageManager damageManager;
 
 
     private void updatePokemonImage(int playerId) {
@@ -40,7 +40,6 @@ public class BattleEvent  implements Serializable {
 //package
     void startFight(Player player1, Player player2) {
         players = new Player[] {player1, player2};
-        if (damageManager == null) damageManager = new DamageManager();
 
         if(players[1].getSelectedPokemon().getSpeed() > players[0].getSelectedPokemon().getSpeed())
             currentPlayerTurn = 0;
@@ -54,6 +53,10 @@ public class BattleEvent  implements Serializable {
 
     void onSaveLoaded() {
         currentPlayerTurn -= 1;
+        players[0].updateCloneTeam(GameManager.GetInstance().getTeamPlayer1());
+       if( !(players[1] instanceof PlayerBot))
+           players[1].updateCloneTeam(GameManager.GetInstance().getTeamPlayer2());
+
         GameManager.GetInstance().switchPage("fightPage");
     }
 
@@ -61,7 +64,7 @@ public class BattleEvent  implements Serializable {
     public void fightInitCallback(PageFightController currentController) {
         this.pageController = currentController;
         UpdatePokemonUi();
-
+        if (damageManager == null) damageManager = new DamageManager();
         GameManager.getSoundManager().getFightMusic().play();
 
         new TextPopupArea(this::nextTurn, "Début du combat !");
@@ -98,6 +101,7 @@ public class BattleEvent  implements Serializable {
         updatePokemonImage(1);
     }
 
+
     public void playerTurnCapacity(Capacity atk) {
         pageController.setGameButtonsVisibility(false);
         var allyPok = players[(currentPlayerTurn) % 2].getSelectedPokemon();
@@ -115,9 +119,11 @@ public class BattleEvent  implements Serializable {
         new TextPopupArea(this::endTurnAction, players[currentPlayerTurn].getName() + " utilise " + atk.getName(),  efficiency + "L'ennemi à perdu " + lostPv + " Pvs.");
     }
 
+
     public void playerTurnSwitchPokemon(PokemonCreature newPokemon ) {
         playerTurnSwitchPokemon(newPokemon, players[currentPlayerTurn]);
     }
+
 
     private void playerTurnSwitchPokemon(PokemonCreature newPokemon, Player currentPlayer) {
         pageController.setGameButtonsVisibility(false);

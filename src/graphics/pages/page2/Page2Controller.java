@@ -1,7 +1,6 @@
 package graphics.pages.page2;
 
 import base.IController;
-import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,9 +19,19 @@ public class Page2Controller implements IController {
     private Button but_fight;
 
     @FXML
+    private Button but_fight_player;
+
+
+    @FXML
     void but_fight_action(ActionEvent event) {
-        GameManager.GetInstance().startFight();
+        GameManager.GetInstance().startFightIA();
     }
+
+    @FXML
+    void but_fight_action_player(ActionEvent event) {
+        GameManager.GetInstance().startFightPlayer();
+    }
+
 
     @FXML
     void but_inventory_action(ActionEvent event) {
@@ -38,4 +47,8 @@ public class Page2Controller implements IController {
     void but_ligues_action(ActionEvent event) {
         GameManager.GetInstance().switchPage("ligue");
     }
+
+
+
+
 }

@@ -1,6 +1,6 @@
-
+﻿
 === POKEMON BATTLE ===
-Un simulateur de combat pokémons, avec sélections de sa team et combats contre l'ordinateur.
+Un simulateur de combat pokémons, avec sélections de team et combats contre un ordinateur.
 Avec un système de combat classique et de ligue.
 
 == AUTEURS ==

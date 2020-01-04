@@ -38,10 +38,12 @@ public class DamageManager {
      */
     String applyCapacity(Capacity capacity, PokemonCreature user, PokemonCreature target) {
 
+
         if (capacity.getDamageClass() == DamageClass.statut) {
-            user.receiveDamage(-(capacity.getPower()/2));
+            user.receiveDamage( capacity.getPower()  ) ;
             return EFFECTIVITY.NONE;
         }
+
         int defense;
         int attack;
         int level = 10;

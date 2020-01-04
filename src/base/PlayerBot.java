@@ -25,11 +25,10 @@ public class PlayerBot extends Player{
 
         while (!turnPassed) {
 
-
-            if (new Random().nextFloat() < 0.8d) {//80% de chance
+            if (new Random().nextFloat() < 0.85d) {//85% de chance
                 turnPassed = UseCapacity();
             } else {
-                ChangePokemon();
+                turnPassed = ChangePokemon();
             }
         }
     }

@@ -4,6 +4,7 @@ package managers;
 import Pokemons.*;
 import base.Player;
 import base.PlayerBot;
+import graphics.pages.TeamBuilder.TeamBuilderController;
 import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.scene.layout.Pane;
 
@@ -18,7 +19,8 @@ public class GameManager  {
     public static GameManager GetInstance(){return Instance;}
     private GameManager(){
         super();
-        team = new ArrayList<>();
+        teamPlayer1 = new ArrayList<>();
+        teamPlayer2 = new ArrayList<>();
         capacities = new Capacities();
         stats = new Stats();
         soundManager = new SoundManager();
@@ -53,6 +55,7 @@ public class GameManager  {
 
     public void StartGame(){
         System.out.println(pageManager == null);
+        soundManager.playBip();
         pageManager.switchPage("page2");
     }
 
@@ -63,19 +66,32 @@ public class GameManager  {
 
     public void startFight(Player p1, Player p2) {
 
-        if(team == null || team.size() == 0){
+        soundManager.playBip();
+
+        if(teamPlayer1 == null || teamPlayer1.size() == 0){
             new TextPopupArea("You can't start a battle without a team.");
             return;
+        }else if (p2 != null && (teamPlayer2 == null || teamPlayer2.size() == 0)) {
+            new TextPopupArea("Player2 can't start a battle without a team.");
+            return;
         }
+
+
         battleEvent = new BattleEvent();
-        if (p1 == null) p1 = new Player(team, "Joueur 1");
-        if (p2 == null) p2 = new PlayerBot(pokedex.getRandomTeam(team.size()), "L'ordinateur");
+        if (p1 == null) p1 = new Player(teamPlayer1, "Joueur 1");
+        if (p2 == null) p2 = new PlayerBot(pokedex.getRandomTeam(teamPlayer1.size()), "L'ordinateur");
+
 
         battleEvent.startFight(p1, p2);
     }
-    public void startFight(){
+    public void startFightIA(){
         startFight(null,null);
     }
+
+    public void startFightPlayer() {
+        startFight(null, new Player(teamPlayer2, "Joueur 2"));
+    }
+
 
     public void finishFight(Player[] players) {
         for (Player player: players) {
@@ -97,14 +113,16 @@ public class GameManager  {
     }
 
     /// ====== Model objects
-    private ArrayList<PokemonCreature> team;
+    private ArrayList<PokemonCreature> teamPlayer1;
+    public ArrayList<PokemonCreature> getTeamPlayer1() {
+        return teamPlayer1;
+    }
 
-    public ArrayList<PokemonCreature> getTeam() {
-        return team;
+    private ArrayList<PokemonCreature> teamPlayer2;
+    public ArrayList<PokemonCreature> getTeamPlayer2() {
+        return teamPlayer2;
     }
-    public void setTeam(List<PokemonCreature> team) {
-        this.team = new ArrayList<>(team);
-    }
+
 
     private final Pokedex pokedex;
     private final Capacities capacities;

@@ -4,6 +4,7 @@ import Pokemons.PokemonCreature;
 import Pokemons.PokemonDescriptor;
 import Pokemons.PokemonDescriptorBean;
 
+import base.IController;
 import graphics.pages.capacityBuilder.CapacityBuilderController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +28,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class TeamBuilderController implements Initializable {
+public class TeamBuilderController implements IController {
 
     @FXML
     private TextField pokemonSearch;
@@ -58,7 +59,8 @@ public class TeamBuilderController implements Initializable {
     private Label speedLabel;
     @FXML
     private ListView<PokemonCreature> teamList;
-
+    @FXML
+    private Button but_selection;
 
     @FXML
     private void onClickAddPokemon(ActionEvent event) {
@@ -93,14 +95,14 @@ public class TeamBuilderController implements Initializable {
 
     // This is call by the child controller (CapacityController)
     public void addClickAddPokemon(PokemonCreature pokemon) {
-        if (team.size() < 6) team.add(pokemon);
+        if (currentSelecetdTeam.size() < 6) currentSelecetdTeam.add(pokemon);
         updateManagerTeam();
     }
 
     @FXML
     private void removePokemon(MouseEvent event) {
         PokemonCreature pokemon = teamList.getSelectionModel().getSelectedItem();
-        team.remove(pokemon);
+        currentSelecetdTeam.remove(pokemon);
         GameManager.getSoundManager().playBip();
         updateManagerTeam();
     }
@@ -108,6 +110,18 @@ public class TeamBuilderController implements Initializable {
     @FXML
     private void filterPokedex(ActionEvent event) {
         filteredList.setPredicate(pokemonDescriptorBean -> pokemonDescriptorBean.getName().startsWith(pokemonSearch.getText()));
+    }
+
+    private void deselectPokemon(){
+        imageView.setImage(null);
+        pokemonName.setText("Selected a pokemon in the list.");
+        types.setText("-");
+        hpLabel.setText("-");
+        attackLabel.setText("-");
+        defenseLabel.setText("-");
+        speAttackLabel.setText("-");
+        speDefenseLabel.setText("-");
+        speedLabel.setText("-");
     }
 
     @FXML
@@ -135,12 +149,21 @@ public class TeamBuilderController implements Initializable {
         speedLabel.setText(     String.valueOf(pokemon.getSpeed()));
     }
 
-    private ObservableList<PokemonCreature> team;
+   // private ObservableList<PokemonCreature> team1;
+  //  private ObservableList<PokemonCreature> team2;
+
+    private ObservableList<PokemonCreature> currentSelecetdTeam;
+
+private int selectedPlayer = 0;
+
     private FilteredList<PokemonDescriptorBean> filteredList; // list of pokemons in the pokedex
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
+    @Override
+    public void onInitialized() {
+
+        deselectPokemon();
 
         ObservableList<PokemonDescriptorBean> observableList = FXCollections.observableArrayList();
         for (PokemonDescriptor poke: GameManager.GetInstance().getPokedex().getPokemons()) {
@@ -153,15 +176,46 @@ public class TeamBuilderController implements Initializable {
         columnTypes.setCellValueFactory(new PropertyValueFactory<>("types"));
 
         ArrayList<PokemonCreature> arrayList = new ArrayList<>();
-        if (GameManager.GetInstance().getTeam() != null && GameManager.GetInstance().getTeam().size() > 0) {
-            arrayList = GameManager.GetInstance().getTeam();
+
+
+        if(selectedPlayer == 0) {
+            if (GameManager.GetInstance().getTeamPlayer1() != null && GameManager.GetInstance().getTeamPlayer1().size() > 0) {
+                arrayList = GameManager.GetInstance().getTeamPlayer1();
+            }
+            currentSelecetdTeam = FXCollections.observableArrayList(arrayList);
+        }else {
+            if (GameManager.GetInstance().getTeamPlayer2() != null && GameManager.GetInstance().getTeamPlayer2().size() > 0) {
+                arrayList = GameManager.GetInstance().getTeamPlayer2();
+            }
         }
-        team = FXCollections.observableArrayList(arrayList);
-        teamList.setItems(team);
+        currentSelecetdTeam = FXCollections.observableArrayList(arrayList);
+        teamList.setItems(currentSelecetdTeam);
+
+    }
+
+    @FXML
+    void onChangePlayer(ActionEvent event) {
+    GameManager.getSoundManager().playBip();
+        selectedPlayer=(selectedPlayer+1)%2;
+        but_selection.setText("Player "+(selectedPlayer+1));
+        onInitialized();
     }
 
 
     private void updateManagerTeam() {
-        GameManager.GetInstance().setTeam(team);
+
+        if(selectedPlayer == 0) {
+            var t1 = GameManager.GetInstance().getTeamPlayer1();
+            t1.clear();
+            t1.addAll(currentSelecetdTeam);
+            return;
+        }
+
+            var t2 = GameManager.GetInstance().getTeamPlayer2();
+            t2.clear();
+            t2.addAll(currentSelecetdTeam);
+
     }
+
+
 }
