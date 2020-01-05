@@ -40,13 +40,13 @@ public class DamageManager {
 
 
         if (capacity.getDamageClass() == DamageClass.statut) {
-            user.receiveDamage( capacity.getPower()  ) ;
+            user.heal(Math.max(capacity.getPower() / 2, 10));
             return EFFECTIVITY.NONE;
         }
 
         int defense;
         int attack;
-        int level = 10;
+        int level = 40;
         if (capacity.getDamageClass() == DamageClass.physical) {
             defense = target.getDefense();
             attack = user.getAttack();

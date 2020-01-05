@@ -2,7 +2,9 @@ package managers;
 
 
 import Pokemons.Capacity;
+import Pokemons.LigueDresser;
 import Pokemons.PokemonCreature;
+import Pokemons.PokemonObject;
 import base.Player;
 import base.PlayerBot;
 import graphics.pages.fightPage.PageFightController;
@@ -101,7 +103,31 @@ public class BattleEvent  implements Serializable {
         updatePokemonImage(1);
     }
 
+    /**
+     * Make the player end his turn using a object on a choiced pokemon
+     * @param object the choiced object
+     * @param target the choiced pokemon
+     */
+    public void playerTurnObject(PokemonObject object, PokemonCreature target) {
+        pageController.setGameButtonsVisibility(false);
+        String message = object.applyEffect(target);
+        UpdatePokemonUi();
+        new TextPopupArea(this::endTurnAction, players[currentPlayerTurn].getName() + " utilise " + object.getName(),  message);
+    }
 
+    /**
+     * Make the player end his turn using a object on the current pokemon
+     * @param object the choiced object
+     */
+    public void playerTurnObject(PokemonObject object) {
+        var allyPok = players[(currentPlayerTurn) % 2].getSelectedPokemon();
+        playerTurnObject(object, allyPok);
+    }
+
+    /**
+     * Make the player end his turn by use a capacity of the current pokemon
+     * @param atk the choiced capacity
+     */
     public void playerTurnCapacity(Capacity atk) {
         pageController.setGameButtonsVisibility(false);
         var allyPok = players[(currentPlayerTurn) % 2].getSelectedPokemon();
@@ -110,7 +136,6 @@ public class BattleEvent  implements Serializable {
         String efficiency = damageManager.applyCapacity(atk, allyPok, ennemyPok);
         lostPv = lostPv - ennemyPok.getHp();
 
-        var ratio = (float) lostPv / (float) ennemyPok.getStartHp();
         UpdatePokemonUi();
         if (efficiency.equals(DamageManager.EFFECTIVITY.NONE)) {
             new TextPopupArea(this::endTurnAction, players[currentPlayerTurn].getName() + " utilise " + atk.getName());
@@ -123,7 +148,6 @@ public class BattleEvent  implements Serializable {
     public void playerTurnSwitchPokemon(PokemonCreature newPokemon ) {
         playerTurnSwitchPokemon(newPokemon, players[currentPlayerTurn]);
     }
-
 
     private void playerTurnSwitchPokemon(PokemonCreature newPokemon, Player currentPlayer) {
         pageController.setGameButtonsVisibility(false);
@@ -148,8 +172,6 @@ public class BattleEvent  implements Serializable {
             return;
         }
 
-
-
         if (pok.IsDead()) {
             var replacement = nextPlayer.getFirstPokemonAlive();
             new TextPopupArea(() -> playerTurnSwitchPokemon(replacement, nextPlayer),
@@ -159,9 +181,16 @@ public class BattleEvent  implements Serializable {
         }
     }
 
+    /**
+     * Exit the fight from the menu
+     */
     public void exitFight() {
         GameManager.GetInstance().finishFight(players);
     }
+
+    /**
+     * End the fight with a winner and a looser
+     */
     private void endFight() {
         Player winner = players[0];
         Player looser = players[1];
@@ -181,7 +210,12 @@ public class BattleEvent  implements Serializable {
         new TextPopupArea(()-> GameManager.GetInstance().finishFight(players),  winner.getName() + " remporte le duel !");
 
     }
-
+    public int getIndexBackground() {
+        if (players[1] == null) throw new IllegalStateException();
+        if (players[1] instanceof LigueDresser) return 3;
+        if (!players[1].isAutomaticPlayer()) return 2;
+        return 1;
+    }
     public void SaveGame(){
 
         String fileName = "Fight_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss'.txt'").format(new Date());

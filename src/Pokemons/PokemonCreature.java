@@ -72,11 +72,27 @@ public class PokemonCreature  implements Serializable {
         speed = stat.getSpeed();
     }
 
-    public void receiveDamage(int damage) {
-        hp -= damage;
+    public int reviveAndHeal() {
+        isDead = false;
+        int result = baseStat.getHp() - hp;
+        hp = baseStat.getHp();
+        return result;
+    }
+    public void heal(int amount) {
+        if (amount < 0) throw  new IllegalArgumentException();
+        hp += amount;
         if (hp > baseStat.getHp()) {
             hp = baseStat.getHp();
         }
+    }
+    public void boostDefenses(int amount) {
+        defense += amount;
+        specialDefense += amount;
+    }
+
+    public void receiveDamage(int damage) {
+        if (damage < 0) throw  new IllegalArgumentException();
+        hp -= damage;
         if(hp <= 0){
             isDead = true;
             hp = 0;

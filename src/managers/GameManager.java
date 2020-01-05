@@ -68,10 +68,10 @@ public class GameManager  {
 
         soundManager.playBip();
 
-        if(teamPlayer1 == null || teamPlayer1.size() == 0){
+        if (teamPlayer1 == null || teamPlayer1.size() == 0){
             new TextPopupArea("You can't start a battle without a team.");
             return;
-        }else if (p2 != null && (teamPlayer2 == null || teamPlayer2.size() == 0)) {
+        } else if (p2 != null && !p2.isAutomaticPlayer() && (teamPlayer2 == null || teamPlayer2.size() == 0)) {
             new TextPopupArea("Player2 can't start a battle without a team.");
             return;
         }

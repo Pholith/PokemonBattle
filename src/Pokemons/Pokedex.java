@@ -45,7 +45,7 @@ public class Pokedex {
             team.add(new PokemonCreature(
                     desc,
                     stats.getBaseStat(desc.getID()),
-                    capacities.getRandomCapacities(Collections.getRandom(desc.getTypes()), 4)));
+                    capacities.getRandomCapacities(Collections.getRandom(desc.getTypes()), 2)));
         }
         return team;
     }

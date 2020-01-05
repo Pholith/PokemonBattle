@@ -49,9 +49,15 @@ public class PageFightController implements IController, ISetStage {
     @FXML
     private ImageView but_options;
     @FXML
+    private ImageView but_selectObject;
+    @FXML
     private ListView<Capacity> list_capacity;
     @FXML
     private ListView<PokemonCreature> list_swichPokemon;
+    @FXML
+    private ListView<PokemonObject> list_selectObject;
+    @FXML
+    private ListView<PokemonCreature> list_selectPokemonForObject;
     @FXML
     private AnchorPane panel_settings;
     @FXML
@@ -62,7 +68,7 @@ public class PageFightController implements IController, ISetStage {
     private Button but_settings_mainMenu;
 
     public void updateLists(Player player) {
-player.fillUiList(list_capacity, list_swichPokemon);
+player.fillUiList(list_capacity, list_swichPokemon, list_selectObject, list_selectPokemonForObject);
     }
 
     public void setGameButtonsVisibility(boolean val){
@@ -85,6 +91,10 @@ player.fillUiList(list_capacity, list_swichPokemon);
         list_capacity.getSelectionModel().setSelectionMode(null);
         list_swichPokemon.setVisible(false);
         list_swichPokemon.getSelectionModel().setSelectionMode(null);
+        list_selectObject.setVisible(false);
+        //list_selectObject.getSelectionModel().setSelectionMode(null);
+        list_selectPokemonForObject.setVisible(false);
+        list_selectPokemonForObject.getSelectionModel().setSelectionMode(null);
     }
 
     public void setPlayerImage(Image img, int idPlayer){
@@ -120,7 +130,8 @@ player.fillUiList(list_capacity, list_swichPokemon);
 
         assert myStage != null;
         try {
-            imageBackground.setImage(new Image(getClass().getResource("/resources/backgrounds_img/fightBg1.png").toString()));
+            int indexBackground = GameManager.getBattleEvent().getIndexBackground();
+            imageBackground.setImage(new Image(getClass().getResource("/resources/backgrounds_img/fightBg"+indexBackground+".png").toString()));
             imageBackground.fitWidthProperty().bind(myStage.widthProperty());
             imageBackground.setPreserveRatio(true);
         } catch (RuntimeException e) {
@@ -130,20 +141,34 @@ player.fillUiList(list_capacity, list_swichPokemon);
 
 
     private void initListViews(){
-        list_capacity.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(list_capacity.getSelectionModel().getSelectedItem() == null) return;
-                GameManager.getBattleEvent().playerTurnCapacity(list_capacity.getSelectionModel().getSelectedItem());
+        list_capacity.setOnMouseClicked(event -> {
+            if(list_capacity.getSelectionModel().getSelectedItem() == null) return;
+            GameManager.getBattleEvent().playerTurnCapacity(list_capacity.getSelectionModel().getSelectedItem());
+        });
+
+        list_swichPokemon.setOnMouseClicked(event -> {
+            var pok = list_swichPokemon.getSelectionModel().getSelectedItem();
+            if(pok == null || pok.IsDead() ) return;
+            GameManager.getBattleEvent().playerTurnSwitchPokemon(list_swichPokemon.getSelectionModel().getSelectedItem());
+        });
+
+        list_selectObject.setOnMouseClicked(mouseEvent -> {
+            PokemonObject selected = list_selectObject.getSelectionModel().getSelectedItem();
+            if (selected == null) return;
+            if (selected.isEffectOnActivePokemon()) {
+                list_selectPokemonForObject.setVisible(false);
+                GameManager.getBattleEvent().playerTurnObject(selected);
+            }
+            else {
+                list_selectPokemonForObject.setVisible(true);
             }
         });
-        list_swichPokemon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                var pok = list_swichPokemon.getSelectionModel().getSelectedItem();
-                if(pok == null || pok.IsDead() ) return;
-                GameManager.getBattleEvent().playerTurnSwitchPokemon(list_swichPokemon.getSelectionModel().getSelectedItem());
-            }
+
+        list_selectPokemonForObject.setOnMouseClicked(mouseEvent -> {
+            PokemonObject selected = list_selectObject.getSelectionModel().getSelectedItem();
+            PokemonCreature pokemonCreature = list_selectPokemonForObject.getSelectionModel().getSelectedItem();
+            if (selected == null ||pokemonCreature == null) return;
+            GameManager.getBattleEvent().playerTurnObject(selected, pokemonCreature);
         });
     }
 
@@ -161,10 +186,12 @@ player.fillUiList(list_capacity, list_swichPokemon);
             tr.setToY(0f);
             linkedList.setVisible(actVisible);
 
-            if(linkedList != list_capacity && list_capacity.isVisible()) onPressImageButton(list_capacity);
-            if(linkedList != list_swichPokemon && list_swichPokemon.isVisible()) onPressImageButton(list_swichPokemon);
+            if (linkedList != list_capacity && list_capacity.isVisible()) onPressImageButton(list_capacity);
+            if (linkedList != list_selectObject && list_selectObject.isVisible()) onPressImageButton(list_selectObject);
+            if (linkedList != list_selectPokemonForObject && list_selectPokemonForObject.isVisible()) onPressImageButton(list_selectPokemonForObject);
+            if (linkedList != list_swichPokemon && list_swichPokemon.isVisible()) onPressImageButton(list_swichPokemon);
 
-        }else{
+        } else {
             tr.setFromY(0f);
             tr.setToY(400f);
 
@@ -185,74 +212,71 @@ player.fillUiList(list_capacity, list_swichPokemon);
         view.setEffect(blackout);
     }
 
-
-
     @FXML
     void onClickAttack(MouseEvent event) {
         onPressImageButton(list_capacity);
     }
-
     @FXML
     void onAttackDrag(MouseEvent event) {
-    onDragImageButton(but_capacity);
+        onDragImageButton(but_capacity);
     }
-
     @FXML
     void onAttackRelease(MouseEvent event) {
         onReleaseImageButton(but_capacity);
     }
-
     @FXML
     void onClickChangePokemon(MouseEvent event) {
         onPressImageButton(list_swichPokemon);
     }
-
     @FXML
     void onChangePokemonRelease(MouseEvent event) {
         onReleaseImageButton(but_switchPokemon);
     }
-
     @FXML
     void onChangePokemonDrag(MouseEvent event) {
         onDragImageButton (but_switchPokemon);
     }
-
     @FXML
     void onClickOptions(MouseEvent event) {
         panel_settings.setVisible(true);
         GameManager.getSoundManager().playBip();
     }
-
     @FXML
     void onOptionsDrag(MouseEvent event) {
         onDragImageButton (but_options);
     }
-
     @FXML
     void onOptionsRelease(MouseEvent event) {
         onReleaseImageButton(but_options);
     }
-
     @FXML
     void onExitFight(ActionEvent event) {
-        GameManager.getSoundManager().playBip();
         GameManager.getBattleEvent().exitFight();
     }
-
     @FXML
     void onExitPanelSettings(ActionEvent event) {
         GameManager.getSoundManager().playBip();
         panel_settings.setVisible(false);
-
     }
-
     @FXML
     void onSaveGame(ActionEvent event) {
         GameManager.getSoundManager().playBip();
         GameManager.getBattleEvent().SaveGame();
     }
-
-
-
-
+    @FXML
+    void onClickObject(MouseEvent event) {
+        onPressImageButton(list_selectObject);
+    }
+    @FXML
+    void onObjectDrag(MouseEvent event) {
+        onDragImageButton(but_selectObject);
+    }
+    @FXML
+    void onObjectRelease(MouseEvent event) {
+        onReleaseImageButton(but_selectObject);
+    }
+    @FXML
+    void onClickPokemonForObject(MouseEvent event) {
+        onPressImageButton(list_selectPokemonForObject);
+    }
 }
