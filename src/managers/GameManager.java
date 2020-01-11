@@ -2,12 +2,17 @@ package managers;
 
 
 import Pokemons.*;
+import base.CONSTANTS;
 import base.Player;
 import base.PlayerBot;
 import graphics.pages.TeamBuilder.TeamBuilderController;
 import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.scene.layout.Pane;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +58,16 @@ public class GameManager  {
         pageManager.AddPopupPanel(pane);
     }
 
-    public void StartGame(){
+    public void StartGame() {
         System.out.println(pageManager == null);
+
+        try {
+            if (!Files.exists(Paths.get(CONSTANTS.saveDir)))
+                Files.createDirectories(Paths.get(CONSTANTS.saveDir));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         soundManager.playBip();
         pageManager.switchPage("page2");
     }

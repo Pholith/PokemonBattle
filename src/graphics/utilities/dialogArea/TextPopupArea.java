@@ -1,20 +1,16 @@
 package graphics.utilities.dialogArea;
 
-import com.sun.prism.paint.Paint;
+import base.CONSTANTS;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import managers.GameManager;
-import org.w3c.dom.Text;
-import utils.Constants;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -39,7 +35,7 @@ public class TextPopupArea {
 
         try {
 
-            FXMLLoader loader = new FXMLLoader(Paths.get(Constants.utilsGraphicDir + "/dialogArea/dialogArea.fxml").toUri().toURL());
+            FXMLLoader loader = new FXMLLoader(Paths.get(CONSTANTS.utilsGraphicDir + "/dialogArea/dialogArea.fxml").toUri().toURL());
             loader.setController(this);
             thisPanel = loader.load();
             GameManager.GetInstance().AddSreenPane(thisPanel);

@@ -1,6 +1,7 @@
 package graphics.pages.loadSave;
 
 
+import base.CONSTANTS;
 import base.IController;
 import graphics.utilities.dialogArea.TextPopupArea;
 import javafx.event.ActionEvent;
@@ -9,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import managers.BattleEvent;
 import managers.GameManager;
-import utils.Constants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,7 +27,7 @@ public class LoadSaveController implements IController {
 
     @Override
     public void onInitialized() {
-        File[] directories = new File("src/saves").listFiles(File::isFile);
+        File[] directories = new File(CONSTANTS.saveDir).listFiles(File::isFile);
         Path path;
 
         list_saves.getItems().clear();

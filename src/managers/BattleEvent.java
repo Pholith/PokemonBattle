@@ -2,6 +2,7 @@ package managers;
 
 
 import Pokemons.*;
+import base.CONSTANTS;
 import base.Player;
 import base.PlayerBot;
 import graphics.pages.fightPage.PageFightController;
@@ -220,7 +221,7 @@ public class BattleEvent  implements Serializable {
         try
         {
             //Saving of object in a file
-            FileOutputStream file = new FileOutputStream("src/saves/"+fileName);
+            FileOutputStream file = new FileOutputStream(CONSTANTS.saveDir+"/"+fileName);
             ObjectOutputStream out = new ObjectOutputStream(file);
 
             // Method for serialization of object

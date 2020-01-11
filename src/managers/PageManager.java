@@ -1,12 +1,8 @@
 package managers;
 
+import base.CONSTANTS;
 import base.IController;
-import com.sun.webkit.network.URLs;
-import javafx.animation.ScaleTransition;
-import javafx.scene.Parent;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
-import utils.Constants;
 import utils.ISetStage;
 import utils.PageNotFoundException;
 import javafx.application.Application;
@@ -17,13 +13,10 @@ import javafx.stage.Stage;
 import utils.UnkownPageException;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.rmi.server.ExportException;
 import java.util.HashMap;
 
 
@@ -53,13 +46,13 @@ public class PageManager extends Application {
     private void InitPageList() {
 
 
-        File[] directories = new File(Constants.pagesDir).listFiles(File::isDirectory);
+        File[] directories = new File(CONSTANTS.pagesDir).listFiles(File::isDirectory);
         Path path;
 
 
         for (var d : directories) {
 
-            path = Paths.get(Constants.pagesDir + "/" + d.getName() + "/Page.fxml");
+            path = Paths.get(CONSTANTS.pagesDir + "/" + d.getName() + "/Page.fxml");
 
 
             if (!Files.exists(path))
@@ -84,7 +77,7 @@ public class PageManager extends Application {
 
         @Override
         public void start(Stage primaryStage) throws Exception {
-            currentPanel = FXMLLoader.load( Paths.get(Constants.pagesDir + "/mainPage/Page.fxml").toUri().toURL());
+            currentPanel = FXMLLoader.load( Paths.get(CONSTANTS.pagesDir + "/mainPage/Page.fxml").toUri().toURL());
             //currentPanel = FXMLLoader.load(getClass().getResource(Constants.pagesDir + "/mainPage/Page.fxml"));
             primaryStage.setTitle("Pokemon");
             main = new Scene(currentPanel);
