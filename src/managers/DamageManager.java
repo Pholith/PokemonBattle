@@ -36,7 +36,7 @@ public class DamageManager {
      * @param target the enemy pokemon
      * @return return the effectivity of the attack
      */
-    String applyCapacity(Capacity capacity, PokemonCreature user, PokemonCreature target) {
+    String applyCapacity(Capacity capacity, PokemonCreature user, PokemonCreature target, DamageCalculator calculator) {
 
 
         if (capacity.getDamageClass() == DamageClass.statut) {
@@ -71,8 +71,7 @@ public class DamageManager {
             multiplier = 1;
         }
 
-        // damage calcul https://www.pokepedia.fr/Calcul_des_d%C3%A9g%C3%A2ts
-        int damage = (int) ((((level * 0.4 + 2) * capacity.getPower()* attack ) / ( defense * 50 ) + 2 ) * multiplier);
+        int damage = calculator.calcul(level, capacity.getPower(), attack, defense, multiplier);
         target.receiveDamage(damage);
 
         if (multiplier <= 0.5) return EFFECTIVITY.NOT_EFFECTIVE;

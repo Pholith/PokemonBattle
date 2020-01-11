@@ -9,7 +9,8 @@ Julien FAIDIDE
 
 == LICENCE ==
 Les ressources du jeu (images/sons/polices) sont la propriété de leurs auteurs et sont l'objet de leur licence.
-Le reste du projet est sous Licence publique générale GNU (Strong Copyleft)
+Les noms et les créations de la Licence Pokemon sont la propriété de Nintendo et sont l'objet de leur licence.
+Le reste du projet est sous Licence publique générale GNU GPL (Strong Copyleft)
 
 == BUILD AND RUN ==
 Notre projet à été réalisé avec IntelliJ, pour le compiler, il faut ouvrir le projet avec IntelliJ, 
@@ -23,9 +24,6 @@ Dans ce cas, il faut réessayer plusieurs fois de lancer le projet)
 
 - Le mode de combat n'a pas encore été implémenté en anglais
 
-- Une grosse limitation du projet est qu'il n'a pas au départ été pensé pour fonctionner sous format .jar
-Il est donc impossible pour le moment de le compiler dans ce format, et impossible de le lancer en dehors de l'IDE.
-
 - Un petit bug de notre projet est que certaines fenêtres ne sont pas correctement redimensionnables.
 
-- De nombreuses erreurs peuvent encore apparaitre lors du chargment des anciennes sauvegardes, à l'ajouts de nouvelles fonctionnalités.
+- De nombreuses erreurs peuvent encore apparaitre lors du chargment des anciennes sauvegardes, à l'ajout de nouvelles fonctionnalités.

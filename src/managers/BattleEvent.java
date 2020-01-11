@@ -1,10 +1,7 @@
 package managers;
 
 
-import Pokemons.Capacity;
-import Pokemons.LigueDresser;
-import Pokemons.PokemonCreature;
-import Pokemons.PokemonObject;
+import Pokemons.*;
 import base.Player;
 import base.PlayerBot;
 import graphics.pages.fightPage.PageFightController;
@@ -133,7 +130,7 @@ public class BattleEvent  implements Serializable {
         var allyPok = players[(currentPlayerTurn) % 2].getSelectedPokemon();
         var ennemyPok = players[(currentPlayerTurn + 1) % 2].getSelectedPokemon();
         var lostPv = ennemyPok.getHp();
-        String efficiency = damageManager.applyCapacity(atk, allyPok, ennemyPok);
+        String efficiency = damageManager.applyCapacity(atk, allyPok, ennemyPok, new DamageCalculator());
         lostPv = lostPv - ennemyPok.getHp();
 
         UpdatePokemonUi();
