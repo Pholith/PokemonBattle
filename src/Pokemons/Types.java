@@ -29,6 +29,7 @@ public class Types implements Serializable {
     public static PokemonType getType(String name) {
         if (typesMap == null) buildTypes();
         PokemonType type = typesMap.get(Strings.noSpaces(name));
+        if  (name.equals("")) return null;
         if (type == null) throw new InvalidFormatException("This type was not found:"+name+"\"");
         return typesMap.get(Strings.noSpaces(name));
     }
