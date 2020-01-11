@@ -59,6 +59,7 @@ public class Pokedex {
         pokemonMapName = new HashMap<>();
         pokemonMapId = new HashMap<>();
 
+        int lineNumber = 1;
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/resources/pokedex.csv"))))
         {
             String currLine;
@@ -66,7 +67,7 @@ public class Pokedex {
             while ((currLine = bufferedReader.readLine()) != null)
             {
                 String[] splitedLine = currLine.split(",");
-
+                lineNumber ++;
                 if (splitedLine.length < 5) throw new InvalidFormatException();
 
                 PokemonDescriptor descriptor = new PokemonDescriptor(
@@ -87,6 +88,8 @@ public class Pokedex {
         catch (IOException e)
         {
             e.printStackTrace();
+        } catch (NumberFormatException | InvalidFormatException e) {
+            System.err.println("Error line " + lineNumber + " : " + e.toString());
         }
     }
 }

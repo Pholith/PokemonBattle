@@ -47,6 +47,8 @@ public class Stats implements Serializable {
 
     private void buildBasicStats() {
         statMapId =  new HashMap<>();
+        int lineNumber = 1;
+
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/resources/pokemon_stats.csv"))))
         {
             String currLine;
@@ -54,6 +56,7 @@ public class Stats implements Serializable {
             while ((currLine = bufferedReader.readLine()) != null)
             {
                 String[] splitedLine = currLine.split(",");
+                lineNumber ++;
 
                 if (splitedLine.length < 5) throw new InvalidFormatException();
 
@@ -77,6 +80,8 @@ public class Stats implements Serializable {
         catch (IOException e)
         {
             System.err.println(e.toString());
+        } catch (NumberFormatException | InvalidFormatException e) {
+            System.err.println("Error line " + lineNumber + " : " + e.toString());
         }
     }
 }

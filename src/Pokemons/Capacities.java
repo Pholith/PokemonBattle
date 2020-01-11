@@ -50,6 +50,7 @@ public class Capacities implements Serializable {
         capacities = new ArrayList<>();
         capacitiesMap = new HashMap<>();
         capacitiesMapByType = new HashMap<>();
+        int lineNumber = 1;
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/resources/moves.csv"))))
         {
             String currLine;
@@ -57,6 +58,7 @@ public class Capacities implements Serializable {
             while ((currLine = bufferedReader.readLine()) != null)
             {
                 String[] splitedLine = currLine.split(",");
+                lineNumber ++;
 
                 if (splitedLine.length < 6) throw new InvalidFormatException();
 
@@ -80,6 +82,8 @@ public class Capacities implements Serializable {
         catch (IOException e)
         {
             e.printStackTrace();
+        } catch (InvalidFormatException | IllegalArgumentException e) {
+            System.err.println("Error line " + lineNumber + " : " + e.toString());
         }
     }
 }

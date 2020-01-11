@@ -1,5 +1,6 @@
 package Pokemons;
 
+import utils.InvalidFormatException;
 import utils.Strings;
 
 import java.io.*;
@@ -27,6 +28,8 @@ public class Types implements Serializable {
      */
     public static PokemonType getType(String name) {
         if (typesMap == null) buildTypes();
+        PokemonType type = typesMap.get(Strings.noSpaces(name));
+        if (type == null) throw new InvalidFormatException("This type was not found.");
         return typesMap.get(Strings.noSpaces(name));
     }
 
