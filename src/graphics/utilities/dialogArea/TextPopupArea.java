@@ -11,6 +11,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import managers.GameManager;
+import utils.UnkownPageException;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -35,7 +36,12 @@ public class TextPopupArea {
 
         try {
 
-            FXMLLoader loader = new FXMLLoader(Paths.get(CONSTANTS.utilsGraphicDir + "/dialogArea/dialogArea.fxml").toUri().toURL());
+            var res = getClass().getResource(CONSTANTS.utilsGraphicDir + "/dialogArea/dialogArea.fxml");
+
+            if(res == null)
+                throw new UnkownPageException("dialogArea.fxml");
+
+            FXMLLoader loader = new FXMLLoader(res);
             loader.setController(this);
             thisPanel = loader.load();
             GameManager.GetInstance().AddSreenPane(thisPanel);
@@ -70,7 +76,7 @@ public class TextPopupArea {
 
 
         } catch (
-                IOException e) {
+                Exception e) {
             e.printStackTrace();
         }
     }

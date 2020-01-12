@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.lang.constant.Constable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,7 +60,7 @@ public class LoadSaveController implements IController {
     @FXML
     void onClickPlay(ActionEvent event) {
         if (list_saves.getSelectionModel().getSelectedItem() != null) {
-        var filename = "src/saves/"+list_saves.getSelectionModel().getSelectedItem();
+        var filename = CONSTANTS.saveDir +list_saves.getSelectionModel().getSelectedItem();
             // Deserialization
             try {
 

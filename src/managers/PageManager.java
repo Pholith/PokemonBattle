@@ -24,7 +24,6 @@ public class PageManager extends Application {
 
 
         private static PageManager instance;
-        private HashMap<String, URI> screenMap = new HashMap<>();
         private Scene main;
         private Pane currentPanel;
 
@@ -37,34 +36,9 @@ public class PageManager extends Application {
             instance = this;
 
 
-            InitPageList();
 
     }
 
-
-
-    private void InitPageList() {
-
-
-        File[] directories = new File(CONSTANTS.pagesDir).listFiles(File::isDirectory);
-        Path path;
-
-
-        for (var d : directories) {
-
-            path = Paths.get(CONSTANTS.pagesDir + "/" + d.getName() + "/Page.fxml");
-
-
-            if (!Files.exists(path))
-                throw new PageNotFoundException("Page " + path + " not found !");
-
-
-            screenMap.put(d.getName(), path.toUri());
-
-
-            continue;
-        }
-    }
 
 
 
@@ -77,7 +51,7 @@ public class PageManager extends Application {
 
         @Override
         public void start(Stage primaryStage) throws Exception {
-            currentPanel = FXMLLoader.load( Paths.get(CONSTANTS.pagesDir + "/mainPage/Page.fxml").toUri().toURL());
+            currentPanel = FXMLLoader.load( getClass().getResource(CONSTANTS.pagesDir + "/mainPage/Page.fxml"));
             //currentPanel = FXMLLoader.load(getClass().getResource(Constants.pagesDir + "/mainPage/Page.fxml"));
             primaryStage.setTitle("Pokemon");
             main = new Scene(currentPanel);
@@ -106,14 +80,18 @@ public class PageManager extends Application {
 
 
 
+
         void switchPage(String name) {
-            if(!screenMap.containsKey(name))
+
+            try {
+        var res = getClass().getResource(CONSTANTS.pagesDir + "/"+name+"/Page.fxml");
+
+            if(res == null)
                 throw new UnkownPageException(name);
 
             System.out.println("Load page "+name);
 
-            try {
-                FXMLLoader loader = new FXMLLoader(screenMap.get(name).toURL());
+                FXMLLoader loader = new FXMLLoader(res);
                 currentPanel = loader.load();
                 var controller = loader.getController();
 
@@ -126,6 +104,8 @@ public class PageManager extends Application {
                 e.printStackTrace();
             }
             main.setRoot(currentPanel);
+
+
         }
 
 
