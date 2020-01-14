@@ -1,0 +1,6 @@
+
+Modification post-soutenance:
+ - Ajouts de messages d'erreurs pour indiquer la ligne d'une erreur de format dans les fichiers .csv
+ - Remplacement des appels de fichiers par des appels à getClass().getResources()
+ - Ajout d'une classe DamageCalculator pour permettre de modifier facilement le calcul des dégats sans modifier le DamageManager
+ - Les constantes sont maintenant dans une seule classe au lieu de 2
